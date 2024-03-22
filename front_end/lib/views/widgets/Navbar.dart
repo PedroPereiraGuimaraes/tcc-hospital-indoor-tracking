@@ -77,51 +77,48 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(15),
+      padding: EdgeInsets.only(top: 20),
       decoration: BoxDecoration(
-        color: Colors.black,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.blue, Colors.blue, Colors.white, Colors.white],
+          stops: [0.1, 0.1, 0.1, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(10),
       ),
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            icon: Icon(
-              Icons.home,
-              color: _currentIndex == 0 ? Colors.blue : Colors.white,
-            ),
-            onPressed: () {
-              _navigateToPage(0);
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: _currentIndex == 1 ? Colors.blue : Colors.white,
-            ),
-            onPressed: () {
-              _navigateToPage(0);
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.shopping_cart,
-              color: _currentIndex == 2 ? Colors.blue : Colors.white,
-            ),
-            onPressed: () {
-              _navigateToPage(0);
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.person,
-              color: _currentIndex == 3 ? Colors.blue : Colors.white,
-            ),
-            onPressed: () {
-              _navigateToPage(0);
-            },
-          ),
+          _buildIconButton(Icons.home, 0),
+          _buildIconButton(Icons.search, 1),
+          _buildIconButton(Icons.shopping_cart, 2),
+          _buildIconButton(Icons.person, 3),
         ],
+      ),
+    );
+  }
+
+  Widget _buildIconButton(IconData icon, int index) {
+    return GestureDetector(
+      onTap: () {
+        _navigateToPage(index);
+      },
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: _currentIndex == index
+              ? const Color.fromARGB(255, 0, 73, 126)
+              : const Color.fromARGB(255, 0, 129, 223),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Icon(
+          icon,
+          color: Colors.white,
+        ),
       ),
     );
   }

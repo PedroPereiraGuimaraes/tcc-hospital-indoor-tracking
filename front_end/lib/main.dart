@@ -20,10 +20,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/splash': (context) => SplashScreen(),
         '/login': (context) => LoginScreen(),
-        //'/register': (context) => RegisterPage(),
-        //'/admin': (context) => AdminPage(),
-        //'/stocks': (context) => StockPage(),
-        //'/stocksadmin': (context) => StockPageAdmin(),
       },
       theme: ThemeData(
         primarySwatch: MaterialColor(0xFF0081DF, {

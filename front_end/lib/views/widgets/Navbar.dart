@@ -92,16 +92,16 @@ class _NavBarState extends State<NavBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildIconButton(Icons.home, 0),
-          _buildIconButton(Icons.search, 1),
-          _buildIconButton(Icons.shopping_cart, 2),
-          _buildIconButton(Icons.person, 3),
+          _buildIconButton('assets/homeIcon.png', 0),
+          _buildIconButton('assets/searchIcon.png', 1),
+          _buildIconButton('assets/listIcon.png', 2),
+          _buildIconButton('assets/settingsIcon.png', 3),
         ],
       ),
     );
   }
 
-  Widget _buildIconButton(IconData icon, int index) {
+  Widget _buildIconButton(String image, int index) {
     return GestureDetector(
       onTap: () {
         _navigateToPage(index);
@@ -115,9 +115,10 @@ class _NavBarState extends State<NavBar> {
               : const Color.fromARGB(255, 0, 129, 223),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Icon(
-          icon,
-          color: Colors.white,
+        child: Image.asset(
+          image,
+          width: 10,
+          height: 10,
         ),
       ),
     );

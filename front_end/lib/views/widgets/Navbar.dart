@@ -115,10 +115,14 @@ class _NavBarState extends State<NavBar> {
               : const Color.fromARGB(255, 0, 129, 223),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Image.asset(
-          image,
-          width: 10,
-          height: 10,
+        child: Container(
+          margin: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(image),
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ),
     );

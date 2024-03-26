@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:front_end/views/screens/LoginScreen.dart';
+import 'package:front_end/views/screens/EquipmentListScreen.dart';
+import 'package:front_end/views/screens/HistoricScreen.dart';
+import 'package:front_end/views/screens/RoomsScreen.dart';
+import 'package:front_end/views/screens/SettingsScreen.dart';
 
 class NavBar extends StatefulWidget {
   final int currentIndex;
@@ -49,25 +52,25 @@ class _NavBarState extends State<NavBar> {
       case 0:
         Navigator.pushReplacement(
           context,
-          CustomPageRoute(builder: (context) => LoginScreen()),
+          CustomPageRoute(builder: (context) => RoomsScreen()),
         );
         break;
       case 1:
         Navigator.pushReplacement(
           context,
-          CustomPageRoute(builder: (context) => LoginScreen()),
+          CustomPageRoute(builder: (context) => EquipmentListScreen()),
         );
         break;
       case 2:
         Navigator.pushReplacement(
           context,
-          CustomPageRoute(builder: (context) => LoginScreen()),
+          CustomPageRoute(builder: (context) => HistoricScreen()),
         );
         break;
       case 3:
         Navigator.pushReplacement(
           context,
-          CustomPageRoute(builder: (context) => LoginScreen()),
+          CustomPageRoute(builder: (context) => SettignsScreen()),
         );
         break;
     }

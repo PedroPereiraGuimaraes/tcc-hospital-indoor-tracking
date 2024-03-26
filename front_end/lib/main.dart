@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:front_end/views/screens/EquipmentListScreen.dart';
 import 'package:front_end/views/screens/LoginScreen.dart';
+import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:front_end/views/screens/SplashScreen.dart';
+import 'package:front_end/views/screens/RegisterScreen.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -16,10 +19,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Coffe Application",
-      initialRoute: '/splash',
+      initialRoute: '/rooms',
       routes: {
         '/splash': (context) => SplashScreen(),
         '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(),
+        '/rooms': (context) => RoomsScreen(),
+        '/equipments': (context) => EquipmentListScreen(),
       },
       theme: ThemeData(
         primarySwatch: MaterialColor(0xFF0081DF, {

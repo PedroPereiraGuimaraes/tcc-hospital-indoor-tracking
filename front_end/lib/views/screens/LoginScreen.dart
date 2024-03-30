@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:front_end/views/screens/RegisterScreen.dart';
+import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,25 +16,162 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  LoginCheck() {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    if (email == '' && password == '') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const RoomsScreen(),
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: Text(
+              'ERRO',
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 129, 223),
+                fontFamily: GoogleFonts.josefinSans().fontFamily,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            content: Text(
+              'Email ou senha incorretos. Por favor, tente novamente.',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: GoogleFonts.josefinSans().fontFamily,
+                fontSize: 17,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 0, 129, 223),
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildTextField('EMAIL', 'user@gmail.com', _emailController,
-                  Icons.email_outlined, false),
-              const SizedBox(height: 20),
-              _buildTextField('PASSWORD', '*****************',
-                  _passwordController, Icons.remove_red_eye_outlined, true),
-              const SizedBox(height: 20),
-            ],
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 40),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset(
+                    'assets/logo.png',
+                    width: 120,
+                    height: 120,
+                  ),
+                ),
+                SizedBox(height: 40),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Continue com seu',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: GoogleFonts.josefinSans().fontFamily,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'LOGIN',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 0, 129, 223),
+                      fontFamily: GoogleFonts.josefinSans().fontFamily,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                _buildTextField('USERNAME', 'USER200', _emailController,
+                    Icons.email_outlined, false),
+                const SizedBox(height: 20),
+                _buildTextField('PASSWORD', '*****************',
+                    _passwordController, Icons.remove_red_eye_outlined, true),
+                const SizedBox(height: 80),
+                ElevatedButton(
+                  onPressed: () {
+                    LoginCheck();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 0, 129, 223),
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: const Text(
+                    'LOGIN',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Josefin Sans',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterScreen(),
+                      ),
+                    );
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Não tenho conta?',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 0, 129, 223),
+                        fontFamily: GoogleFonts.josefinSans().fontFamily,
+                        fontSize: 15,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -52,13 +188,13 @@ class _LoginScreenState extends State<LoginScreen> {
         labelStyle: TextStyle(
           color: Color.fromARGB(255, 0, 129, 223),
           fontFamily: GoogleFonts.josefinSans().fontFamily,
-          fontSize: 15,
+          fontSize: 14,
         ),
         hintText: hint,
         hintStyle: TextStyle(
           color: Colors.grey,
           fontFamily: GoogleFonts.josefinSans().fontFamily,
-          fontSize: 18,
+          fontSize: 15,
         ),
         suffixIcon: Icon(
           icon,

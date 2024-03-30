@@ -27,20 +27,7 @@ class MyApp extends StatelessWidget {
         '/rooms': (context) => RoomsScreen(),
         '/equipments': (context) => EquipmentListScreen(),
       },
-      theme: ThemeData(
-        primarySwatch: MaterialColor(0xFF0081DF, {
-          50: Color(0xFFE0F2F8),
-          100: Color(0xFFB3E0F2),
-          200: Color(0xFF80C9EA),
-          300: Color(0xFF4DA3D9),
-          400: Color(0xFF2691D1),
-          500: Color(0xFF0081DF),
-          600: Color(0xFF0075D9),
-          700: Color(0xFF0069D3),
-          800: Color(0xFF005DCD),
-          900: Color(0xFF0048C3),
-        }),
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
     );
   }
 }

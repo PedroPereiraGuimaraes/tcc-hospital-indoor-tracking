@@ -16,8 +16,8 @@ class _HistoricScreenState extends State<HistoricScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        isAdmin: true,
-        hasBackButton: true,
+        isAdmin: false,
+        hasBackButton: false,
       ),
       body: Center(
         child: Text('Historic Screen'),

@@ -27,7 +27,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               color: Colors.white,
               iconSize: 20,
               onPressed: () {
-                // implementar
+                Navigator.pop(context);
               },
             )
           : null,

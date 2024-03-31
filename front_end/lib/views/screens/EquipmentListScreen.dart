@@ -16,8 +16,8 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        isAdmin: true,
-        hasBackButton: true,
+        isAdmin: false,
+        hasBackButton: false,
       ),
       body: Center(
         child: Text('Equipments List Screen'),

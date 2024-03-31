@@ -70,7 +70,7 @@ class _NavBarState extends State<NavBar> {
       case 3:
         Navigator.pushReplacement(
           context,
-          CustomPageRoute(builder: (context) => SettignsScreen()),
+          CustomPageRoute(builder: (context) => SettingsScreen()),
         );
         break;
     }

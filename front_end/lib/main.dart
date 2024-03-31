@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:front_end/views/screens/AdminScreen.dart';
 import 'package:front_end/views/screens/EquipmentListScreen.dart';
 import 'package:front_end/views/screens/LoginScreen.dart';
 import 'package:front_end/views/screens/RoomsScreen.dart';
@@ -26,8 +27,9 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterScreen(),
         '/rooms': (context) => RoomsScreen(),
         '/equipments': (context) => EquipmentListScreen(),
+        '/admin': (context) => AdminScreen(),
       },
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primaryColor: Colors.blue, primarySwatch: Colors.blue),
     );
   }
 }

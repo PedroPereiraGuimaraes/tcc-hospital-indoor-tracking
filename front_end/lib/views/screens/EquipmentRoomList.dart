@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:front_end/views/screens/EquipamentScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,7 +24,7 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
     return Scaffold(
       appBar: CustomAppBar(
         isAdmin: false,
-        hasBackButton: false,
+        hasBackButton: true,
       ),
       body: Container(
         width: double.infinity,
@@ -130,8 +131,8 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EquipmentRoomList(
-                roomName: name,
+              builder: (context) => EquipamentScreen(
+                equipamentName: name,
               ),
             ),
           );

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:front_end/views/screens/EquipamentScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -126,7 +127,16 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
           Icons.arrow_forward_ios,
           color: Color.fromARGB(255, 0, 129, 223),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EquipamentScreen(
+                equipamentName: name,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

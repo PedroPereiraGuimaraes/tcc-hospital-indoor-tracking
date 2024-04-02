@@ -51,10 +51,17 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               ),
             ),
             SizedBox(height: 20),
-            CardEquipament(widget.equipamentName, DateTime.now()),
+            Expanded(
+              child: ListView(
+                children: [
+                  CardEquipament("Equipamento 1", DateTime.now()),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+      bottomNavigationBar: NavBar(currentIndex: 0),
     );
   }
 

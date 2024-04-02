@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:front_end/views/screens/AddEquipamentList.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool isAdmin;
@@ -38,7 +39,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 color: Colors.white,
                 iconSize: 28,
                 onPressed: () {
-                  // implementar
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddEquipamentList(),
+                    ),
+                  );
                 },
               ),
             ]

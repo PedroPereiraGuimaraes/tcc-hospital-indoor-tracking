@@ -15,7 +15,7 @@ class EquipmentListScreen extends StatefulWidget {
 class _EquipmentListScreenState extends State<EquipmentListScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<String> EquipamentNames =
-      List.generate(10, (index) => "Equipament $index");
+      List.generate(10, (index) => "Equipamento $index");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,9 +126,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
           Icons.arrow_forward_ios,
           color: Color.fromARGB(255, 0, 129, 223),
         ),
-        onTap: () {
-          // implementar
-        },
+        onTap: () {},
       ),
     );
   }

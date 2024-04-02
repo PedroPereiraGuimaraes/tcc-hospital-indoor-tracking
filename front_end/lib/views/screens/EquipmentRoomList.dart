@@ -1,27 +1,28 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:front_end/views/screens/EquipmentRoomList.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RoomsScreen extends StatefulWidget {
-  const RoomsScreen({Key? key}) : super(key: key);
-
+class EquipmentRoomList extends StatefulWidget {
+  final String roomName;
+  const EquipmentRoomList({Key? key, required this.roomName}) : super(key: key);
   @override
-  State<RoomsScreen> createState() => _RoomsScreenState();
+  State<EquipmentRoomList> createState() => _EquipmentRoomListState();
 }
 
-class _RoomsScreenState extends State<RoomsScreen> {
+class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> roomNames = List.generate(10, (index) => "Room $index");
+  List<String> EquipamentNames =
+      List.generate(10, (index) => "Equipamento $index");
+  //print(EquipamentNames);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        isAdmin: true,
+        isAdmin: false,
         hasBackButton: false,
       ),
       body: Container(
@@ -31,7 +32,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
         child: Column(
           children: [
             _buildTextField(
-              "PESQUISAR",
+              'PESQUISAR',
               _searchController,
               Icons.search,
               false,
@@ -40,7 +41,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Salas Cadastradas",
+                "Equipamentos da Sala ${widget.roomName}",
                 style: TextStyle(
                   color: Color.fromARGB(255, 0, 129, 223),
                   fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -52,12 +53,12 @@ class _RoomsScreenState extends State<RoomsScreen> {
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: roomNames.length,
+                itemCount: EquipamentNames.length,
                 itemBuilder: (context, index) {
-                  final roomName = roomNames[index].toLowerCase();
+                  final EquipamentName = EquipamentNames[index].toLowerCase();
                   final searchQuery = _searchController.text.toLowerCase();
-                  return roomName.contains(searchQuery)
-                      ? CardRoom(roomNames[index], 10)
+                  return EquipamentName.contains(searchQuery)
+                      ? CardEquipament(EquipamentNames[index], DateTime.now())
                       : SizedBox.shrink();
                 },
               ),
@@ -88,19 +89,17 @@ class _RoomsScreenState extends State<RoomsScreen> {
           icon,
           color: Color.fromARGB(255, 0, 129, 223),
         ),
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             color: Color.fromARGB(255, 0, 129, 223),
-            width: 3.0,
           ),
         ),
       ),
     );
   }
 
-  Widget CardRoom(String name, int equipments) {
+  Widget CardEquipament(String name, DateTime time) {
     return Card(
       color: Colors.white,
       shadowColor: Colors.blue,
@@ -116,7 +115,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
           ),
         ),
         subtitle: Text(
-          "Equipamentos:$equipments",
+          "Última vez visto: ${time.day}/${time.month}/${time.year}",
           style: TextStyle(
             color: Colors.black,
             fontFamily: GoogleFonts.josefinSans().fontFamily,

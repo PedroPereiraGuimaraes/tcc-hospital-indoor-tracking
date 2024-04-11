@@ -14,7 +14,10 @@ class User(BaseModel):
     email: str
     password: str
     register: str
-    isAdmin: bool
+
+class User_login(BaseModel):
+    register: str
+    password: str
 
 class Room(BaseModel):
     name: str

@@ -12,9 +12,6 @@ class Database:
 
     def connect(self, database, collection):
         try:
-            print("db: ", os.getenv('DB_USER'))
-            print("db: ", os.getenv('DB_PASSWORD'))
-
             connectionString = f"mongodb+srv://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@indoor-tracking.gf1iu9s.mongodb.net/?retryWrites=true&w=majority&appName=indoor-tracking"
             self.clusterConnection = pymongo.MongoClient(
                 connectionString,

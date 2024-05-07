@@ -63,10 +63,10 @@ float calcularMediaRSSI(String ssid, int numMedicoes) {
   }
 
   // Verifica se pelo menos uma medição foi feita para o SSID especificado
-  if (contMedicoes > 0) {
+  if (contMedicoes >= 15) {
     return somaRSSI / contMedicoes;
   } else {
-    Serial.println("SSID não encontrado");
+    Serial.println("Erro no cálculo da média.");
     return 0;
   }
 }

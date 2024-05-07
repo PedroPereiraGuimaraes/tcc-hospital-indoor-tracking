@@ -20,6 +20,7 @@ def create_room(room: Room_data):
 
     return status_creation
 
+#Por enquanto não haverá salas com mesmo nome
 @router.get("/read-one")
 def read_one_room(name: str):
     roomDAO = RoomDAO()

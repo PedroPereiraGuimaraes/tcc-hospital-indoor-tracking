@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
-  
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -18,63 +17,61 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _registerController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-
   LoginCheck() {
     String register = _registerController.text;
     String password = _passwordController.text;
     authenticate(register, password).then((result) {
-        if (result == 'Success') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const RoomsScreen(),
-        ),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Colors.white,
-            title: Text(
-              'ERRO',
-              style: TextStyle(
-                color: Color.fromARGB(255, 0, 129, 223),
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            content: Text(
-              'Email ou senha incorretos. Por favor, tente novamente.',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 17,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'OK',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 0, 129, 223),
-                    fontFamily: GoogleFonts.josefinSans().fontFamily,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w300,
-                  ),
+      if (result == 'Success') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const RoomsScreen(),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              title: Text(
+                'ERRO',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 0, 129, 223),
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-            ],
-          );
-        },
-      );
-    }
-    
+              content: Text(
+                'Email ou senha incorretos. Por favor, tente novamente.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 0, 129, 223),
+                      fontFamily: GoogleFonts.josefinSans().fontFamily,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
     });
   }
 
@@ -127,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildTextField('REGISTER', 'USER200', _registerController,
+                _buildTextField('EMAIL', 'EMAIL', _registerController,
                     Icons.email_outlined, false),
                 const SizedBox(height: 20),
                 _buildTextField('PASSWORD', '*****************',

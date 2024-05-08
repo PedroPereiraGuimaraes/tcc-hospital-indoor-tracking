@@ -1,20 +1,32 @@
 import 'dart:convert';
-import 'package:front_end/database/services/models/User.dart';
+
 import 'package:http/http.dart' as http;
 
 Future<String> authenticate(String register, String password) async {
-  print('register: $register');
   final url = Uri.parse('http://10.0.2.2:8000/user/login');
-  final response = await http.post(
-    url,
-    body:
-        {"register": "pedro", "password": "123456"},
-   
-  );
-  print('Response status: ${response}');
-  if (response.statusCode == 200) {
-    return 'Success';
-  } else {
-    throw Exception('Failed to authenticate');
+  final headers = {
+    'Content-Type': 'application/json',
+  };
+  final body = jsonEncode({
+    "register": register,
+    "password": password,
+  });
+
+  try {
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      return 'Success';
+    } else {
+      final errorMessage =
+          jsonDecode(response.body)['message'] ?? 'Unknown error';
+      throw Exception('Failed to authenticate: $errorMessage');
+    }
+  } catch (e) {
+    throw Exception('An error occurred while authenticating: ${e.toString()}');
   }
 }

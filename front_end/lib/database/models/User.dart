@@ -1,20 +1,27 @@
 class User {
-  final String name;
-  String? cargo;
+  String? name;
+  String? email;
+  bool? isAdmin;
+  String? password;
+  String? registration;
 
-  User({required this.name, this.cargo});
+  User({this.name, this.email, this.isAdmin, this.password, this.registration});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      name: json['name'] as String,
-      cargo: json['cargo'] as String?,
-    );
+  User.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    email = json['email'];
+    isAdmin = json['isAdmin'];
+    password = json['password'];
+    registration = json['registration'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'cargo': cargo,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['isAdmin'] = this.isAdmin;
+    data['password'] = this.password;
+    data['registration'] = this.registration;
+    return data;
   }
 }

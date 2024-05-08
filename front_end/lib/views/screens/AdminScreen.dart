@@ -14,7 +14,7 @@ class AdminScreen extends StatefulWidget {
 
 class _AdminScreenState extends State<AdminScreen> {
   List<User> _users = [
-    User(name: 'Pedro Pereira Guimarães', cargo: 'Administrador'),
+    // User(name: 'Pedro Pereira Guimarães', cargo: 'Administrador'),
     User(name: 'Maria da Silva'),
     User(name: 'João da Silva'),
     User(name: 'Felipe Arlindo'),
@@ -54,7 +54,7 @@ class _AdminScreenState extends State<AdminScreen> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        _users[index].name,
+                        _users[index].name.toString(),
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -63,7 +63,11 @@ class _AdminScreenState extends State<AdminScreen> {
                         ),
                       ),
                       subtitle: Text(
-                        _users[index].cargo ?? 'Não definido',
+                        _users[index].isAdmin == true
+                            ? 'Administrador'
+                            : _users[index].isAdmin == false
+                                ? 'Colaborador'
+                                : 'Cargo não definido',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -112,7 +116,7 @@ class _AdminScreenState extends State<AdminScreen> {
                 ),
                 onTap: () {
                   setState(() {
-                    _users[index].cargo = cargo;
+                    _users[index].isAdmin = cargo == 'Administrador';
                   });
                   Navigator.pop(context);
                 },

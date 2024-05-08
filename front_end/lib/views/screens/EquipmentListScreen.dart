@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:front_end/database/services/GetAllEquipament.dart';
 import 'package:front_end/views/screens/EquipamentScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:front_end/database/services/models/Equipament.dart';
 
 class EquipmentListScreen extends StatefulWidget {
   const EquipmentListScreen({super.key});
@@ -15,8 +16,49 @@ class EquipmentListScreen extends StatefulWidget {
 
 class _EquipmentListScreenState extends State<EquipmentListScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> EquipamentNames =
-      List.generate(10, (index) => "Equipamento $index");
+
+  late Future<List<Equipament>> equipa;
+  @override
+  void initState() {
+    super.initState();
+    equipa = getAllEquipament();
+  }
+  /*List<Equipament> equipamentList = [];
+
+  Future<void> _getEquipament() async {
+    List equipamentList = await getAllEquipament();
+    final equipaments = equipamentList
+        .map((equipamentJson) => Equipament.fromJson(equipamentJson))
+        .toList();
+    setState(() {
+      equipamentList = equipaments;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getEquipament();
+  }
+
+   List<String> EquipamentNames =
+      List.generate(10, (index) => "Equipamento $index");*/
+
+  /*List<Equipament> equipamentList = [];
+
+  _getAllEquipament(){
+    API.getAllEquipament().then((response){
+      setState(() {
+        Iterable list = json.decode(response.body);
+        equipamentList = list.map((model) => Equipament.fromJson(model)).toList();
+        print('LISTAAAAA: ${equipamentList.length}');
+      });
+    });
+  }
+  _EquipmentListScreenState(){
+    _getAllEquipament();
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,17 +93,26 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
             ),
             SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: EquipamentNames.length,
-                itemBuilder: (context, index) {
-                  final EquipamentName = EquipamentNames[index].toLowerCase();
-                  final searchQuery = _searchController.text.toLowerCase();
-                  return EquipamentName.contains(searchQuery)
-                      ? CardRoom(EquipamentNames[index], 'UTI')
-                      : SizedBox.shrink();
+              child: FutureBuilder<List<Equipament>>(
+                future: equipa,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return CardRoom(
+                          snapshot.data![index].name.toString(),
+                          snapshot.data![index].currentRoom.toString(),
+                        );
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  return CircularProgressIndicator();
                 },
+              )
               ),
-            ),
           ],
         ),
       ),

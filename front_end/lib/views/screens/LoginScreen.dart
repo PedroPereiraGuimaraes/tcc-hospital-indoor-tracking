@@ -1,26 +1,29 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:front_end/database/services/UserServices.dart';
 import 'package:front_end/views/screens/RegisterScreen.dart';
 import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+  
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _registerController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  LoginCheck() {
-    String email = _emailController.text;
-    String password = _passwordController.text;
 
-    if (email == '' && password == '') {
+  LoginCheck() {
+    String register = _registerController.text;
+    String password = _passwordController.text;
+    authenticate(register, password).then((result) {
+        if (result == 'Success') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -71,6 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
     }
+    
+    });
   }
 
   @override
@@ -122,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildTextField('USERNAME', 'USER200', _emailController,
+                _buildTextField('REGISTER', 'USER200', _registerController,
                     Icons.email_outlined, false),
                 const SizedBox(height: 20),
                 _buildTextField('PASSWORD', '*****************',

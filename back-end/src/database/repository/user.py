@@ -38,9 +38,9 @@ class UserDAO: # DAO - Data Access Object
             return False
 
 
-    def login_authentication(self, register, password):
+    def login_authentication(self, email, password):
         try:
-            res = self.db.collection.find_one({"registration": register, "password": password})
+            res = self.db.collection.find_one({"email": email, "password": password})
             
             parsed_json = json.loads(json_util.dumps(res))
 

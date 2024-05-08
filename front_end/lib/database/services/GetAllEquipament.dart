@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:front_end/models/Equipament.dart';
+import 'package:front_end/database/models/Equipament.dart';
 import 'package:http/http.dart' as http;
 
 // buscar lista de equipamentos cadastrados
@@ -14,10 +14,8 @@ Future<List<Equipament>> getAllEquipament() async {
     } else {
       throw Exception('Failed to load Equipaments');
     }
-  }catch(e){
+  } catch (e) {
     print('erroooooo to $e');
     return Future.error('Failed to $e');
+  }
 }
-} 
-
-

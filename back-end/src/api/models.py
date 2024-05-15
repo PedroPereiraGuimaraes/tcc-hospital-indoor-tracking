@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 class Equipment(BaseModel):
     name: str
     patrimonio: str
@@ -20,7 +19,7 @@ class User(BaseModel):
     register: str
 
 class User_login(BaseModel):
-    register: str
+    email: str
     password: str
 
 class New_user_admin(BaseModel):

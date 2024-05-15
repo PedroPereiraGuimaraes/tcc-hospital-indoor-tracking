@@ -21,7 +21,7 @@ def create_new_user(new_user: User):
 @router.post("/login")
 def login(user_login:User_login):
     userDAO = UserDAO()
-    user_verify = userDAO.login_authentication(user_login.register, user_login.password)
+    user_verify = userDAO.login_authentication(user_login.email, user_login.password)
 
     return user_verify
 

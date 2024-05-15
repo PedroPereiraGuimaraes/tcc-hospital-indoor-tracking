@@ -28,6 +28,14 @@ def read_one_equipment(patrimonio: str):
 
     return equipment
 
+@router.get("/get-equipments-by-current-room")
+def read_one_equipment(current_room: str):
+    equipmentDAO = EquipmentDAO()
+
+    equipment = equipmentDAO.get_equipments_by_current_room(current_room)
+
+    return equipment
+
 @router.put("/update")
 def update_equipment(update_data: Equipment):
     equipmentDAO = EquipmentDAO()

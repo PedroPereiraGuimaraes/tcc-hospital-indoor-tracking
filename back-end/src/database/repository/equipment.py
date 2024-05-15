@@ -42,12 +42,19 @@ class EquipmentDAO: # DAO - Data Access Object
         except Exception as e:
             return False
         
+    def get_equipments_by_current_room(self, current_room):
+        try:
+            res = self.db.collection.find({"current_room": current_room})
+
+            parsed_json = json.loads(json_util.dumps(res))
+
+            return parsed_json
+        except Exception as e:
+            return False
+        
     def update(self, data_equipment):
         try:
-            res = self.db.collection.update_one({"patrimonio": data_equipment.patrimonio}, {"$set":  {"name": data_equipment.name,
-                         "maintenance": data_equipment.maintenance,
-                         "current_room": data_equipment.current_room,
-                         "current_date": data_equipment.current_date}})
+            res = self.db.collection.update_one({"patrimonio": data_equipment.patrimonio}, {"$set":  {"name": data_equipment.name}})
 
             if res.matched_count == 0:
                 return False

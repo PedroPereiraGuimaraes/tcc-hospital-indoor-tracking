@@ -2,10 +2,7 @@ from pydantic import BaseModel
 
 class Equipment(BaseModel):
     name: str
-    patrimonio: str
     maintenance: bool
-    current_room: str
-    current_date: str
     # historic: dict
 
 class Equipment_maintenance(BaseModel):

@@ -1,0 +1,5 @@
+// Construir o JSON manualmente  
+String json = "{\"SSID\": \"" + ssid + "\",
+ \"value\": " + String(sensorValue) + "}";   
+// Enviar o JSON pela porta serial  
+Serial.println(json);

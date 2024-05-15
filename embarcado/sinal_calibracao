@@ -1,0 +1,45 @@
+#include <WiFi.h>
+
+#define NUM_MEDICOES 20
+#define INTERVALO_MEDICAO_MS 20 // Intervalo entre cada medição em milissegundos
+
+void setup() {
+  Serial.begin(115200);
+  delay(20);
+
+  // Inicializa o Wi-Fi
+  WiFi.mode(WIFI_STA);
+
+  Serial.println("Escaneando pontos de acesso...");
+
+  // Realiza o escaneamento das redes Wi-Fi disponíveis
+  
+
+  
+    while(true){
+      int numRedes = WiFi.scanNetworks();
+
+      String retorno = "";
+      // Exibe informações de cada ponto de acesso encontrado
+      for (int i = 0; i < numRedes; i++) {
+        String bssid = WiFi.BSSIDstr(i);
+        String RSSI = String(WiFi.RSSI(i));
+
+        // Serial.print("BSSID: ");
+        // Serial.println(bssid);
+
+        // Serial.println("RSSI:");
+        // Serial.println(RSSI);
+        // Serial.println("-----------------------");
+        retorno = retorno + bssid + "->" + RSSI + ";  ";
+      }
+      delay(1000);
+      Serial.println(retorno);
+    }
+  }
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}

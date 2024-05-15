@@ -35,6 +35,10 @@ void setup() {
       Serial.print(NUM_MEDICOES);
       Serial.println(" medições:");
       Serial.println(mediaRSSI);
+      // Construir o JSON manualmente  
+      String json = "{SSID: " + ssid + ",BSSID: " + bssid + ",NumMedicoes: " + String(NUM_MEDICOES)  + ",Media:" + String(mediaRSSI) + "}";   
+      // Enviar o JSON pela porta serial  
+      Serial.println(json);
       Serial.println("-----------------------");
     }
   }

@@ -67,11 +67,11 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: equipamentsList.length,
                 itemBuilder: (context, index) {
                   return CardRoom(
-                    "Equipamento $index",
-                    "Sala 1",
+                    equipamentsList[index].name.toUpperCase(),
+                    equipamentsList[index].currentRoom.toUpperCase(),
                   );
                 },
               ),

@@ -1,13 +1,10 @@
-import 'package:front_end/database/models/Historyc.dart';
-
 class Equipament {
   String id;
   String name;
   String patrimonio;
   bool maintenance;
   String currentRoom;
-  DateTime currentDate;
-  List<Historic> historic;
+  String currentDate;
 
   Equipament({
     required this.id,
@@ -16,7 +13,6 @@ class Equipament {
     required this.maintenance,
     required this.currentRoom,
     required this.currentDate,
-    required this.historic,
   });
 
   factory Equipament.fromJson(Map<String, dynamic> json) {
@@ -26,10 +22,7 @@ class Equipament {
       patrimonio: json['patrimonio'],
       maintenance: json['maintenance'],
       currentRoom: json['current_room'],
-      currentDate: DateTime.parse(json['current_date']['\$date']),
-      historic: (json['historic'] as List)
-          .map((item) => Historic.fromJson(item))
-          .toList(),
+      currentDate: json['current_date']['\$date'],
     );
   }
 
@@ -40,8 +33,7 @@ class Equipament {
     data['patrimonio'] = patrimonio;
     data['maintenance'] = maintenance;
     data['current_room'] = currentRoom;
-    data['current_date'] = {'\$date': currentDate.toIso8601String()};
-    data['historic'] = historic.map((item) => item.toJson()).toList();
+    data['current_date'] = {'\$date': currentDate};
     return data;
   }
 }

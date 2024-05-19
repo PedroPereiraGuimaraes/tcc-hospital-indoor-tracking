@@ -1,12 +1,15 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
+// Nome do aparelho
+String nome = "ESP1";
+
 // Substitua pelos seus dados de rede
 const char* ssid = "EspTest";
 const char* password = "32323232";
 
 // Substitua pelo endereço IP do seu broker MQTT
-const char* mqtt_server = "ServerIP";
+const char* mqtt_server = "192.168.180.86";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -44,8 +47,6 @@ void reconnect() {
     // Tente se conectar ao servidor MQTT
     if (client.connect("ESP32Client")) {
       Serial.println("conectado");
-      // Uma vez conectado, publique uma mensagem...
-      client.publish("teste", "hello world");
       // ... e ressubscreva
       client.subscribe("teste");
     } else {
@@ -72,20 +73,6 @@ void loop() {
   // Realiza o escaneamento das redes Wi-Fi disponíveis
 
   String retorno = "";
-  // Exibe informações de cada ponto de acesso encontrado
-  for (int i = 0; i < numRedes; i++) {
-    String bssid = WiFi.BSSIDstr(i);
-    String RSSI = String(WiFi.RSSI(i));
-
-    // Serial.print("BSSID: ");
-    // Serial.println(bssid);
-    // Serial.println("RSSI:");
-    // Serial.println(RSSI);
-    // Serial.println("-----------------------");
-    retorno = retorno + bssid + "->" + RSSI + ";  ";
-  }
-
-  delay(1000);
   Serial.println(retorno);
 
   // Verifica se o cliente MQTT está conectado, se não estiver, tenta reconectar
@@ -95,16 +82,26 @@ void loop() {
   // Mantém a conexão MQTT ativa
   client.loop();
 
-  // Publique mensagens a cada 2 segundos
-  long now = millis();
-  static long lastMsg = 0;
-  if (now - lastMsg > 2000) {
-    lastMsg = now;
-    // Crie uma mensagem com um timestamp
+  client.publish("teste", "START", true);
+  Serial.println("Start");
+  delay(1000);
+
+  // Exibe informações de cada ponto de acesso encontrado
+  for (int i = 0; i < numRedes; i++) {
+    String sSSID = WiFi.SSID(i);
+    String BSSID = WiFi.BSSIDstr(i);
+    String RSSI = String(WiFi.RSSI(i));
+    retorno = nome + "," + sSSID + "," + BSSID + "," + RSSI;
     String msg = retorno;
+
     Serial.print("Publicando mensagem: ");
     Serial.println(msg);
-    // Publique a mensagem no tópico MQTT
-    client.publish("teste", msg.c_str());
+    // Publicação da mensagem no tópico MQTT
+    client.publish("teste", msg.c_str(), true);
+    delay(1000);
   }
+  client.publish("teste", "FIM", true);
+  Serial.println("Fim");
+  delay(1000);
 }
+

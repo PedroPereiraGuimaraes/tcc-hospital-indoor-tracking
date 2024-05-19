@@ -1,17 +1,29 @@
 import paho.mqtt.client as mqtt
 
+# Função de callback quando o cliente recebe uma CONNACK do servidor
 def on_connect(client, userdata, flags, rc):
-    print("Conectado com resultado code "+str(rc))
-    client.subscribe("topico/teste")  # Subscreva ao tópico desejado
+    if rc == 0:
+        print("Conectado com sucesso ao broker MQTT")
+    else:
+        print(f"Falha ao conectar, código de erro {rc}")
+    # Subscrição no tópico após conectar
+    client.subscribe("teste", qos=1)
 
+# Função de callback quando uma mensagem é recebida do servidor
 def on_message(client, userdata, msg):
-    payload = msg.payload.decode('utf-8')  # Decodifica os bytes para uma string UTF-8
-    print("Mensagem recebida no tópico " + msg.topic + ": " + payload)
+    print(f"Mensagem em {msg.topic}: {msg.payload.decode()}")
 
+# Criação de um novo cliente MQTT
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("MQTT_SERVER_IP", 1883, 60)  # Conecte-se ao broker MQTT
+# Conexão ao broker MQTT
+client.connect("192.168.180.86", 1883, 60)
 
-client.loop_forever()  # Mantenha o cliente conectado e recebendo mensagens
+# Loop para processar as mensagens
+try:
+    client.loop_forever()
+except KeyboardInterrupt:
+    client.disconnect()
+    print("Desconectado do broker MQTT")

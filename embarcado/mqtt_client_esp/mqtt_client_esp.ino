@@ -48,7 +48,7 @@ void reconnect() {
     if (client.connect("ESP32Client")) {
       Serial.println("conectado");
       // ... e ressubscreva
-      client.subscribe("teste");
+      client.subscribe("routerinfo");
     } else {
       // Se a conexão falhar, exiba o código de retorno (rc) e tente novamente em 5 segundos
       Serial.print("falhou, rc=");
@@ -82,7 +82,7 @@ void loop() {
   // Mantém a conexão MQTT ativa
   client.loop();
 
-  client.publish("teste", "START", true);
+  client.publish("routerinfo", "START", true);
   Serial.println("Start");
   delay(1000);
 
@@ -97,10 +97,10 @@ void loop() {
     Serial.print("Publicando mensagem: ");
     Serial.println(msg);
     // Publicação da mensagem no tópico MQTT
-    client.publish("teste", msg.c_str(), true);
+    client.publish("routerinfo", msg.c_str(), true);
     delay(1000);
   }
-  client.publish("teste", "FIM", true);
+  client.publish("routerinfo", "FIM", true);
   Serial.println("Fim");
   delay(1000);
 }

@@ -84,7 +84,7 @@ void loop() {
 
   client.publish("routerinfo", "START", true);
   Serial.println("Start");
-  delay(1000);
+  delay(500);
 
   // Exibe informações de cada ponto de acesso encontrado
   for (int i = 0; i < numRedes; i++) {
@@ -98,10 +98,10 @@ void loop() {
     Serial.println(msg);
     // Publicação da mensagem no tópico MQTT
     client.publish("routerinfo", msg.c_str(), true);
-    delay(1000);
+    delay(500);
   }
   client.publish("routerinfo", "FIM", true);
   Serial.println("Fim");
-  delay(1000);
+  delay(500);
 }
 

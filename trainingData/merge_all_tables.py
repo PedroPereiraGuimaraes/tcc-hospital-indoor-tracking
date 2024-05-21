@@ -18,7 +18,7 @@ def joinTables(directory):
     df_final = pd.concat(dfs, ignore_index=True)
 
     # Salvando novo dataFrame 
-    df_final.to_csv('roomData/joinTables.csv', index=False, sep=';')
+    df_final.to_csv('roomData/joinTables.csv', index=False, sep=',')
 
 directory = 'roomData'
 joinTables(directory)

@@ -8,7 +8,6 @@ import pandas as pd
 from mqttClientPython import ClassConnect
 
 
-
 # String de entrada informações do MQTT
 data_str = "AB:CD:FG:EH:RG:FR,80; AB:CD:FG:EH:RG:FR,80;"
 

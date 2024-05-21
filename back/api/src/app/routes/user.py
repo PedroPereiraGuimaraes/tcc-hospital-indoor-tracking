@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from database.repository.user import UserDAO
-from api.models import User, User_login, New_user_admin
+from app.models import User, User_login, New_user_admin
 
 router = APIRouter()
 

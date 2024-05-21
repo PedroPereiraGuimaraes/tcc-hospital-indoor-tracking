@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  indoor-tracking:
+    container_name: "api-indoor-tracking"
+    build: 
+      context: .
+    ports:
+      - 8000:8000
+    environment:
+      - DB_USER=root
+      - DB_PASSWORD=root
+
+networks:
+  api-network:
+    external: true

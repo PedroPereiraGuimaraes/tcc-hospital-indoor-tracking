@@ -2,7 +2,6 @@ FROM python:3.9
 
 WORKDIR /api
 
-# COPY ./src/requirements.txt / 
 COPY ./src /api/src
 
 RUN pip install -r "/api/src/requirements.txt"

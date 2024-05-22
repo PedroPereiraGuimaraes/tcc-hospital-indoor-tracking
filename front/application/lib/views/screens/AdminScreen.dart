@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/User.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:front_end/database/services//UserService.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({Key? key}) : super(key: key);
@@ -13,18 +16,44 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
-  List<User> _users = [
-    // User(name: 'Pedro Pereira Guimarães', cargo: 'Administrador'),
-    User(name: 'Maria da Silva'),
-    User(name: 'João da Silva'),
-    User(name: 'Felipe Arlindo'),
-    User(name: 'Ana Maria'),
-  ];
 
   List<String> _cargos = [
     'Administrador',
     'Colaborador',
   ];
+
+  List<User> _users = [];
+
+  void _fetchUsers() {
+
+    getAllUsers().then((users) {
+      setState(() {
+        _users = users.map<User>((user) => User.fromJson(user)).toList();
+      });
+    }).catchError((error) {
+      print('Failed to fetch users: $error');
+    });
+  }
+
+  void _changeUserAdmin(String register, bool isAdmin) {
+    changeUserAdmin(register, isAdmin).then((result) {
+      if (result == 'Success') {
+        _fetchUsers();
+      } else {
+        print('Failed to change user admin');
+      }
+    }).catchError((error) {
+      print('Failed to change user admin: $error');
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    _fetchUsers();
+    _cargos = ['Administrador', 'Colaborador'];
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +145,7 @@ class _AdminScreenState extends State<AdminScreen> {
                 ),
                 onTap: () {
                   setState(() {
+                      _changeUserAdmin(_users[index].registration.toString(), true);
                     _users[index].isAdmin = cargo == 'Administrador';
                   });
                   Navigator.pop(context);

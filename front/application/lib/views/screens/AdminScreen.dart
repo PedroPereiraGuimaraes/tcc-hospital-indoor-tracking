@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:front_end/database/services/models/User.dart';
+import 'package:front_end/database/models/User.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 

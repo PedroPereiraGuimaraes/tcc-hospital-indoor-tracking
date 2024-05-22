@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/Equipament.dart';
 import 'package:front_end/database/services/EquipamentService.dart';
-import 'package:front_end/views/screens/EquipamentScreen.dart';
+import 'package:front_end/views/screens/EquipamentInfoScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +19,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
   List<Equipament> equipamentsList = [];
 
   Future<void> getEquipaments() async {
-    List<dynamic> equipaments = await getAllEquipament();
+    List<dynamic> equipaments = await getReadAll();
     equipamentsList = equipaments.map((e) => Equipament.fromJson(e)).toList();
     setState(() {
       equipamentsList = equipamentsList;
@@ -72,6 +72,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
                   return CardRoom(
                     equipamentsList[index].name.toUpperCase(),
                     equipamentsList[index].currentRoom.toUpperCase(),
+                    equipamentsList[index].patrimonio,
                   );
                 },
               ),
@@ -114,7 +115,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
     );
   }
 
-  Widget CardRoom(String name, String room) {
+  Widget CardRoom(String name, String room, String patrimonio) {
     return Card(
       color: Colors.white,
       shadowColor: Colors.blue,
@@ -147,6 +148,8 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
             MaterialPageRoute(
               builder: (context) => EquipamentScreen(
                 equipamentName: name,
+                roomName: room,
+                patrimonio: patrimonio,
               ),
             ),
           );

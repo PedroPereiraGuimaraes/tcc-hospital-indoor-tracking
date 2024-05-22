@@ -16,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _registerController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String? token = "";
 
   LoginCheck() {
     String register = _registerController.text;

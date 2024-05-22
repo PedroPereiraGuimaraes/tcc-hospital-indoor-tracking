@@ -1,10 +1,10 @@
 FROM python:3.9
 
-WORKDIR /api
+WORKDIR /app
 
-COPY ./src /api/src
+COPY ./src /app/src
 
-RUN pip install -r "/api/src/requirements.txt"
+RUN pip install -r "/app/src/requirements.txt"
 
 CMD ["python", "src/main.py"]
 

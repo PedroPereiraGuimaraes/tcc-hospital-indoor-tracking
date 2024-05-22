@@ -6,7 +6,7 @@ import pandas as pd
 import pandas as pd
 
 #Substitua 'caminho/do/seu/arquivo.csv' pelo caminho real do seu arquivo CSV
-caminho_do_arquivo = r'C:\Users\mable\Documents\tcc-hospital-indoor-tracking\back\trainingData\roomData\joinTables.csv'
+caminho_do_arquivo = r'back\trainingData\roomData\joinTables.csv'
 train_data = pd.read_csv(caminho_do_arquivo)
 
 #Exibir as primeiras linhas do dataset

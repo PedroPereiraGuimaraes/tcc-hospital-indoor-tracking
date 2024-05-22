@@ -8,8 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class EquipamentScreen extends StatefulWidget {
   final String equipamentName;
-  const EquipamentScreen({Key? key, required this.equipamentName})
-      : super(key: key);
+  final String roomName;
+  final String patrimonio;
+  const EquipamentScreen({
+    Key? key,
+    required this.equipamentName,
+    required this.roomName,
+    required this.patrimonio,
+  }) : super(key: key);
 
   @override
   State<EquipamentScreen> createState() => _EquipamentScreenState();
@@ -54,7 +60,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
             Expanded(
               child: ListView(
                 children: [
-                  CardEquipament("Equipamento 1", DateTime.now()),
+                  CardEquipament(widget.equipamentName, DateTime.now()),
                 ],
               ),
             ),
@@ -126,7 +132,6 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               ),
             ),
           ),
-
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -139,7 +144,6 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               ),
             ),
           ),
-
           SizedBox(height: 20),
           Align(
             alignment: Alignment.centerLeft,
@@ -153,8 +157,6 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               ),
             ),
           ),
-
-          // card azul com a informação de ultima vez calibrado
           Container(
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(top: 10),
@@ -173,12 +175,11 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               ),
             ),
           ),
-
           SizedBox(height: 20),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Próxima atualização: ",
+              "Ultima vez visto em: ",
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 129, 223),
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -196,7 +197,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               borderRadius: BorderRadius.zero,
             ),
             child: Text(
-              "5.1",
+              widget.roomName,
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -209,7 +210,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Tombo: ",
+              "Patrimonio: ",
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 129, 223),
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -227,7 +228,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               borderRadius: BorderRadius.zero,
             ),
             child: Text(
-              "1234567890",
+              widget.patrimonio,
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -236,31 +237,55 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               ),
             ),
           ),
-
           SizedBox(height: 20),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 0, 129, 223),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              "Calibrar",
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: Color.fromARGB(255, 0, 129, 223),
+                    padding: EdgeInsets.only(
+                        top: 30, bottom: 30, left: 50, right: 50),
+                  ),
+                  child: Text(
+                    "Atualizar",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.josefinSans().fontFamily,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-          // o icone tem q estar dentro de um circulo azul
-
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete),
-          ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  margin: EdgeInsets.only(left: 10),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Color.fromARGB(255, 124, 16, 16),
+                      padding: EdgeInsets.only(
+                          top: 30, bottom: 30, left: 10, right: 10),
+                    ),
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

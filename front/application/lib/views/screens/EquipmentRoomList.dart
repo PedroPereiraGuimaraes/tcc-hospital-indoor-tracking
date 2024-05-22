@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:front_end/views/screens/EquipamentInfoScreen.dart';
+import 'package:front_end/views/screens/EquipamentScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,6 +17,7 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
   List<String> EquipamentNames =
       List.generate(10, (index) => "Equipamento $index");
+  //print(EquipamentNames);
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,7 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
                   final EquipamentName = EquipamentNames[index].toLowerCase();
                   final searchQuery = _searchController.text.toLowerCase();
                   return EquipamentName.contains(searchQuery)
-                      ? CardEquipament(EquipamentNames[index], "Sala 1", "1234",
-                          DateTime.now())
+                      ? CardEquipament(EquipamentNames[index], DateTime.now())
                       : SizedBox.shrink();
                 },
               ),
@@ -100,8 +100,7 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
     );
   }
 
-  Widget CardEquipament(
-      String name, String room, String patrimonio, DateTime time) {
+  Widget CardEquipament(String name, DateTime time) {
     return Card(
       color: Colors.white,
       shadowColor: Colors.blue,
@@ -134,8 +133,6 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
             MaterialPageRoute(
               builder: (context) => EquipamentScreen(
                 equipamentName: name,
-                roomName: room,
-                patrimonio: patrimonio,
               ),
             ),
           );

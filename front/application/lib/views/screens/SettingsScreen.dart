@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:front_end/views/screens/AdminScreen.dart';
+import 'package:front_end/views/screens/ProfileScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -116,6 +117,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               onTap: () {
                 // Navegar para a tela de informações sobre o aplicativo
+              },
+            ),
+             ListTile(
+              title: Text('Perfil',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    color: Colors.grey[800],
+                  )),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: Color.fromARGB(255, 0, 129, 223),
+              ),
+              onTap: ()  {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(),
+                  ),
+                );
               },
             ),
           ],

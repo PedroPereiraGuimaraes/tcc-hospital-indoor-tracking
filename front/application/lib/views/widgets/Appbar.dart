@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:front_end/views/screens/InsertNewEquipament.dart';
+import 'package:front_end/views/screens/AddEquipamentList.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool isAdmin;

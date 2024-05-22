@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:front_end/views/screens/EquipmentListScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';

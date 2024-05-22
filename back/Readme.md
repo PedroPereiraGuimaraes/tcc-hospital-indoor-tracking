@@ -14,6 +14,7 @@ Este projeto é uma API de gerenciamento de equipamentos que permite criar, ler,
 - Arduino IDE
 -- WiFi
 -- PubSubClient
+-- ESP32 Support
 
 ### Passos para Instalação
 1. Instale o Broker MQTT Mosquitto: https://mosquitto.org/download/
@@ -41,7 +42,7 @@ Mosquitto é um popular broker MQTT que facilita a comunicação entre dispositi
 2. Instale o Arduino IDE: https://www.arduino.cc/en/software
 
 2.1. Na barra de ícones à esquerda do bloco de texto selecione o library manager, busque e instale as bibliotecas WiFi e PubSubClient
-- As que não estiverem disponíveis pela busca instalar pelo seguinte método:
+- Caso não disponíveis pela busca instalar pelo seguinte método:
 
     Abra a Arduino IDE.
     Vá em File > Preferences.
@@ -55,7 +56,24 @@ Mosquitto é um popular broker MQTT que facilita a comunicação entre dispositi
     Pesquise por "esp32" e instale o pacote "esp32 by Espressif Systems".
     Vá em Tools > Board e selecione a placa ESP32 que você está usando (por exemplo, ESP32 Dev Module).
 
+3. Instale o Python e as respectivas bibliotecas
+    Baixar e executar o Instalador: https://www.python.org/downloads/
+    Na tela inicial, certifique-se de marcar a opção "Add Python to PATH".
+    Clique em "Install Now" para uma instalação padrão.
+
+    Verifique a Instalação:
+    Abra o Prompt de Comando (Cmd).
+    Digite "python --version" e pressione Enter para verificar a versão do Python instalada.
+    Você também pode verificar o pip (gerenciador de pacotes do Python) com "pip --version".
+
+    Em seguida execute os comandos abaixo no CMD no mesmo diretório onde os arquivos deste projeto estão instalados:
+
+4. Encontre o IP do servidor/broker MQTT e atualize o campo mqtt_server nos arquivos abaixo:   
+    back\embarcado\mqtt_client_esp\aquisicaoDeDadosMqtt.ino (linha 12)
+    back\api\recebimentoDeDadosMQTT.py (linha 4)
 
 
-
+5. Carregue o código de aquisição de dados no ESP32 usando o Arduino IDE
+    Conecte o ESP32 ao computador, selecione a placa e a porta USB no Arduino IDE e carregue o ESP32 com o arquivo abaixo:
+    back\embarcado\mqtt_client_esp\aquisicaoDeDadosMqtt.ino
 

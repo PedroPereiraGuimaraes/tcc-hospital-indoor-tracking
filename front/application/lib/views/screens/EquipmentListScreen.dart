@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/Equipament.dart';
-import 'package:front_end/database/services/GetAllEquipament.dart';
+import 'package:front_end/database/services/EquipamentService.dart';
 import 'package:front_end/views/screens/EquipamentScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';

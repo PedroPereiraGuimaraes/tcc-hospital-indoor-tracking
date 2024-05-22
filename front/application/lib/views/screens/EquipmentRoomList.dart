@@ -17,7 +17,6 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
   List<String> EquipamentNames =
       List.generate(10, (index) => "Equipamento $index");
-  //print(EquipamentNames);
 
   @override
   Widget build(BuildContext context) {

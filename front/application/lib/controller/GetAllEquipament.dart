@@ -9,8 +9,6 @@ class GetAllEquipament {
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
-      // print da informacao
-      print(data);
       return data.map((e) => Equipament.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load Equipaments');

@@ -1,6 +1,6 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from app.routes import equipment, user, room
+from src.app.routes import equipment, user, room
 import uvicorn
 
 api = FastAPI()

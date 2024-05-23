@@ -1,4 +1,4 @@
-from database.connection_db import Database
+from src.database.connection_db import Database
 import json
 from bson import json_util 
 # import attr
@@ -22,13 +22,13 @@ class UserDAO: # DAO - Data Access Object
     def create_user(self, new_user):
         try:
 
-            if self.db.collection.find_one({"registration": new_user.register}) != None:
+            if self.db.collection.find_one({"registration": new_user.register_}) != None:
                 return {"Error messagem": "Usuário existente"}
             
             user_json = {"name": new_user.name,
                          "email": new_user.email,
                          "password": new_user.password,
-                         "registration": new_user.register,
+                         "registration": new_user.register_,
                          "isAdmin": False}
             res = self.db.collection.insert_one(user_json)
             

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from database.repository.equipment import EquipmentDAO
-from app.models import Equipment, Equipment_maintenance
+from src.database.repository.equipment import EquipmentDAO
+from src.app.models import Equipment, Equipment_maintenance
 
 router = APIRouter()
 

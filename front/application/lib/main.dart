@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:front_end/views/screens/AdminScreen.dart';
 import 'package:front_end/views/screens/EquipmentListScreen.dart';
 import 'package:front_end/views/screens/LoginScreen.dart';
+import 'package:front_end/views/screens/ProfileScreen.dart';
 import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:front_end/views/screens/SplashScreen.dart';
 import 'package:front_end/views/screens/RegisterScreen.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Coffe Application",
-      initialRoute: '/login',
+      initialRoute: '/rooms',
       routes: {
         '/splash': (context) => SplashScreen(),
         '/login': (context) => LoginScreen(),
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/rooms': (context) => RoomsScreen(),
         '/equipments': (context) => EquipmentListScreen(),
         '/admin': (context) => AdminScreen(),
+        '/profile': (context) => ProfileScreen(),
       },
       theme: ThemeData(primaryColor: Colors.blue, primarySwatch: Colors.blue),
     );

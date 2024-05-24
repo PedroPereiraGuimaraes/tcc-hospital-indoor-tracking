@@ -1,3 +1,7 @@
 .idea
 .vscode
 AutogluonModels
+
+*__init__.py
+*__pycache__
+*.env

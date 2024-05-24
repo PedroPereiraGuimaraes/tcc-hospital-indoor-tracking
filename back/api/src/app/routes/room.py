@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from database.repository.room import RoomDAO
-from app.models import Room_data
+from src.database.repository.room import RoomDAO
+from src.app.models import Room_data
 
 router = APIRouter()
 

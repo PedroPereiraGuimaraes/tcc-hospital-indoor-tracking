@@ -1,4 +1,4 @@
-from database.connection_db import Database
+from src.database.connection_db import Database
 import json
 from bson import json_util 
 
@@ -21,9 +21,7 @@ class EquipmentDAO: # DAO - Data Access Object
         try:
             user_json = {"name": new_equipment.name,
                          "patrimonio": new_equipment.patrimonio,
-                         "maintenance": new_equipment.maintenance,
-                         "current_room": new_equipment.current_room,
-                         "current_date": new_equipment.current_date}
+                         "maintenance": False}
             res = self.db.collection.insert_one(user_json)
             
             return True

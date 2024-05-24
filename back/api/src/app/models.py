@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 class Equipment(BaseModel):
     name: str
-    maintenance: bool
+    patrimonio: str
     # historic: dict
 
 class Equipment_maintenance(BaseModel):
@@ -13,14 +13,14 @@ class User(BaseModel):
     name: str
     email: str
     password: str
-    register: str
+    register_: str
 
 class User_login(BaseModel):
     email: str
     password: str
 
 class New_user_admin(BaseModel):
-    register: str
+    register_: str
     is_admin: bool
 
 class Room_data(BaseModel):

@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:front_end/views/screens/InsertNewEquipament.dart';
+import 'package:front_end/views/screens/InsertNewRoom.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool isAdmin;
+  final bool isRoom;
   final bool hasBackButton;
   const CustomAppBar(
-      {Key? key, required this.isAdmin, required this.hasBackButton})
+      {Key? key, required this.isRoom, required this.isAdmin, required this.hasBackButton})
       : super(key: key);
 
   @override
@@ -39,12 +41,21 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 color: Colors.white,
                 iconSize: 28,
                 onPressed: () {
+                  if (widget.isRoom) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddRoomList(),
+                      ),
+                    );
+                  } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => AddEquipamentList(),
                     ),
                   );
+                  }
                 },
               ),
             ]

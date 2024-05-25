@@ -147,6 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isRoom: false,
         isAdmin: false,
         hasBackButton: true,
       ),

@@ -57,6 +57,7 @@ class _AdminScreenState extends State<AdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isRoom: false,
         isAdmin: false,
         hasBackButton: true,
       ),

@@ -5,6 +5,8 @@ import 'package:front_end/views/screens/EquipmentRoomList.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:front_end/database/models/Room.dart';
+import 'package:front_end/database/services/RoomService.dart';
 
 class RoomsScreen extends StatefulWidget {
   const RoomsScreen({Key? key}) : super(key: key);
@@ -15,12 +17,27 @@ class RoomsScreen extends StatefulWidget {
 
 class _RoomsScreenState extends State<RoomsScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> roomNames = List.generate(10, (index) => "Room $index");
+  List<Room> roomsList = [];
+
+  Future<void> getRooms() async {
+    List<dynamic> rooms = await getReadAll();
+    roomsList = rooms.map((e) => Room.fromJson(e)).toList();
+    setState(() {
+      roomsList = roomsList;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getRooms();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isRoom: true,
         isAdmin: true,
         hasBackButton: false,
       ),
@@ -52,12 +69,14 @@ class _RoomsScreenState extends State<RoomsScreen> {
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: roomNames.length,
+                itemCount: roomsList.length,
                 itemBuilder: (context, index) {
-                  final roomName = roomNames[index].toLowerCase();
+                  final roomName = roomsList[index].name!.toLowerCase();
+                  final qEquipments = roomsList[index].equipments?.length ??
+                      0; // Usando operador de coalescência nula para fornecer um valor padrão
                   final searchQuery = _searchController.text.toLowerCase();
                   return roomName.contains(searchQuery)
-                      ? CardRoom(roomNames[index], 10)
+                      ? CardRoom(roomName, qEquipments)
                       : SizedBox.shrink();
                 },
               ),

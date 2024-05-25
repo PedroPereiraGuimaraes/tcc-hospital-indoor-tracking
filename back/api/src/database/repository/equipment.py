@@ -8,7 +8,7 @@ class EquipmentDAO: # DAO - Data Access Object
 
     def get_all(self):
         try:
-            res = self.db.collection.find()
+            res = self.db.collection.find({}, {"_id": 0, "name": 1,"patrimonio": 1, "maintenance": 1, "current_room": 1, "current_date": 1})
 
             parsed_json = json.loads(json_util.dumps(res))
             return parsed_json

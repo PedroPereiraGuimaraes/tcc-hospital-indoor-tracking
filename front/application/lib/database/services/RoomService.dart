@@ -9,6 +9,7 @@ Future<List<dynamic>> getReadAll() async {
 
   try {
     if (response.statusCode == 200) {
+      print('Room found ${jsonDecode(response.body)}');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load Room');
@@ -44,7 +45,8 @@ Future<dynamic> getReadOne(String name) async {
 
   try {
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      print('Room found ${jsonDecode(response.body)}');
+      return [jsonDecode(response.body)];
     } else {
       throw Exception('Failed to load Room');
     }

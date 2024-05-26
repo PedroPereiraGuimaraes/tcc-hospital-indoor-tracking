@@ -40,6 +40,7 @@ Future<dynamic> getReadOne(int patrimonio) async {
 Future<List<dynamic>> getEquipmentsByCurrentRoom(String current_room) async {
   // var url = Uri.parse(
   //     'http://10.0.2.2:8000/equipament/get-equipments-by-current-room?current_room=$current_room');
+  print('current_room: $current_room');
   var url = Uri.parse(
      '$URL/equipament/get-equipments-by-current-room?current_room=$current_room');
   var response = await http.get(url);

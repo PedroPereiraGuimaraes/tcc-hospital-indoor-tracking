@@ -76,7 +76,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
                       0; // Usando operador de coalescência nula para fornecer um valor padrão
                   final searchQuery = _searchController.text.toLowerCase();
                   return roomName.contains(searchQuery)
-                      ? CardRoom(roomName, qEquipments)
+                      ? CardRoom(roomName.toUpperCase(), qEquipments)
                       : SizedBox.shrink();
                 },
               ),

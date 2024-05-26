@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Hospital Indoor Tracking System",
-      initialRoute: '/historic',
+      initialRoute: '/login',
       routes: {
         '/splash': (context) => SplashScreen(),
         '/login': (context) => LoginScreen(),

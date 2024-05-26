@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+const String URL = 'http://localhost:8000';
+
 Future<List<dynamic>> getReadAll() async {
-  var url = Uri.parse('http://10.0.2.2:8000/equipament/read-all');
+  // var url = Uri.parse('http://10.0.2.2:8000/equipament/read-all');
+  var url = Uri.parse("$URL/equipament/read-all");
   var response = await http.get(url);
 
   try {
@@ -17,8 +20,10 @@ Future<List<dynamic>> getReadAll() async {
 }
 
 Future<dynamic> getReadOne(int patrimonio) async {
-  var url = Uri.parse(
-      'http://10.0.2.2:8000/equipament/read-one?patrimonio=$patrimonio');
+  // var url = Uri.parse(
+  //     'http://10.0.2.2:8000/equipament/read-one?patrimonio=$patrimonio');
+   var url = Uri.parse(
+      '$URL/equipament/read-one?patrimonio=$patrimonio');
   var response = await http.get(url);
 
   try {
@@ -33,8 +38,11 @@ Future<dynamic> getReadOne(int patrimonio) async {
 }
 
 Future<List<dynamic>> getEquipmentsByCurrentRoom(String current_room) async {
+  // var url = Uri.parse(
+  //     'http://10.0.2.2:8000/equipament/get-equipments-by-current-room?current_room=$current_room');
+  print('current_room: $current_room');
   var url = Uri.parse(
-      'http://10.0.2.2:8000/equipament/get-equipments-by-current-room?current_room=$current_room');
+     '$URL/equipament/get-equipments-by-current-room?current_room=$current_room');
   var response = await http.get(url);
 
   try {
@@ -49,8 +57,10 @@ Future<List<dynamic>> getEquipmentsByCurrentRoom(String current_room) async {
 }
 
 Future<dynamic> getHistory(int patrimonio) async {
+  // var url = Uri.parse(
+  //     'http://10.0.2.2:8000/equipament/history?patrimonio=$patrimonio');
   var url = Uri.parse(
-      'http://10.0.2.2:8000/equipament/history?patrimonio=$patrimonio');
+      '$URL/equipament/history?patrimonio=$patrimonio');
   var response = await http.get(url);
 
   try {
@@ -65,8 +75,10 @@ Future<dynamic> getHistory(int patrimonio) async {
 }
 
 Future<dynamic> deleteEquipament(int patrimonio) async {
+  // var url = Uri.parse(
+  //     'http://10.0.2.2:8000/equipament/delete?patrimonio=$patrimonio');
   var url = Uri.parse(
-      'http://10.0.2.2:8000/equipament/delete?patrimonio=$patrimonio');
+     '$URL/equipament/delete?patrimonio=$patrimonio');
   var response = await http.delete(url);
 
   try {

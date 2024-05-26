@@ -1,27 +1,52 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:front_end/database/models/EquipamentRoom.dart';
+import 'package:front_end/database/services/RoomService.dart';
 import 'package:front_end/views/screens/EquipamentInfoScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:front_end/database/models/Room.dart';
 class EquipmentRoomList extends StatefulWidget {
   final String roomName;
   const EquipmentRoomList({Key? key, required this.roomName}) : super(key: key);
   @override
   State<EquipmentRoomList> createState() => _EquipmentRoomListState();
 }
-
 class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> EquipamentNames =
-      List.generate(10, (index) => "Equipamento $index");
+  
+  List<dynamic> equipamentList = [];
+  late final EquipamentName = ''; 
+
+  Future<void> getEquipaments() async {
+    String roomName = widget.roomName;
+    print('sala ${widget.roomName}');
+    //getReadOne(roomName);
+    List<dynamic> equipaments = await getReadOne(roomName);
+    equipamentList = equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
+    var listOsEq = equipamentList.map((e) => e.equipments).toList();
+    var lp = listOsEq[0];
+    print('equipamentList $lp');
+    setState(() {
+      equipamentList = equipamentList;
+      
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getEquipaments();
+  }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isRoom: false,
         isAdmin: false,
         hasBackButton: true,
       ),
@@ -53,12 +78,12 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: EquipamentNames.length,
+                itemCount: equipamentList.length,
                 itemBuilder: (context, index) {
-                  final EquipamentName = EquipamentNames[index].toLowerCase();
                   final searchQuery = _searchController.text.toLowerCase();
                   return EquipamentName.contains(searchQuery)
-                      ? CardEquipament(EquipamentNames[index], "Sala 1", "1234",
+                      ? CardEquipament(
+                        'Raio-X', '1234' , '26/05/2024',
                           DateTime.now())
                       : SizedBox.shrink();
                 },

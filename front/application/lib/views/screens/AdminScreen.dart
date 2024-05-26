@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/User.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
@@ -59,6 +57,7 @@ class _AdminScreenState extends State<AdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isRoom: false,
         isAdmin: false,
         hasBackButton: true,
       ),

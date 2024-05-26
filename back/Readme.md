@@ -9,6 +9,8 @@ Este projeto é uma API de gerenciamento de equipamentos que permite criar, ler,
 ### Pré-requisitos
 - Python
 -- Pandas
+-- AutoGluon
+-- Paho
 - MongoDB
 - Mosquitto MQTT Broker
 - Arduino IDE
@@ -67,6 +69,9 @@ Mosquitto é um popular broker MQTT que facilita a comunicação entre dispositi
     Você também pode verificar o pip (gerenciador de pacotes do Python) com "pip --version".
 
     Em seguida execute os comandos abaixo no CMD no mesmo diretório onde os arquivos deste projeto estão instalados:
+    "pip install pandas"
+    "pip install paho-mqtt"
+    "pip install autogluon"
 
 4. Encontre o IP do servidor/broker MQTT e atualize o campo mqtt_server nos arquivos abaixo:   
     back\embarcado\mqtt_client_esp\aquisicaoDeDadosMqtt.ino (linha 12)

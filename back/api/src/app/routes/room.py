@@ -1,10 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 from src.database.repository.room import RoomDAO
 from src.app.models import Room_data
 
 router = APIRouter()
 
-@router.get("/read-all")
+@router.get("/read-all", status_code=status.HTTP_200_OK)
 def get_all_rooms():
     roomDAO = RoomDAO()
 
@@ -12,7 +12,7 @@ def get_all_rooms():
 
     return rooms
 
-@router.post("/create")
+@router.post("/create", status_code=status.HTTP_201_CREATED)
 def create_room(room: Room_data):
     roomDAO = RoomDAO()
 
@@ -21,7 +21,7 @@ def create_room(room: Room_data):
     return status_creation
 
 #Por enquanto não haverá salas com mesmo nome
-@router.get("/read-one")
+@router.get("/read-one", status_code=status.HTTP_200_OK)
 def read_one_room(name: str):
     roomDAO = RoomDAO()
 
@@ -36,7 +36,7 @@ def read_one_room(name: str):
 
 #     return update_status
 
-@router.delete("/delete")
+@router.delete("/delete", status_code=status.HTTP_200_OK)
 def deleteUser(uuid: str):
     roomDAO = RoomDAO()
     status = roomDAO.delete(uuid)

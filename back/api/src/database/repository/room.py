@@ -5,7 +5,7 @@ from bson import json_util
 
 class RoomDAO: # DAO - Data Access Object
     def __init__(self):
-        self.db = Database(database="indoor_db", collection="room")
+        self.db = Database(collection="room")
 
     def get_all(self):
         try:
@@ -22,7 +22,7 @@ class RoomDAO: # DAO - Data Access Object
         try:
             uuid_room = str(uuid.uuid4())
 
-            if self.read_one(new_room_name) != None:
+            if self.read_one(new_room_name) != (None and True):
                 return {"Error message": "Sala já existente"}
 
             

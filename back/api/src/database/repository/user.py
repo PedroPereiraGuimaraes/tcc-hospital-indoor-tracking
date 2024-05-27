@@ -5,7 +5,7 @@ from bson import json_util
 
 class UserDAO: # DAO - Data Access Object
     def __init__(self):
-        self.db = Database(database="indoor_db", collection="user")
+        self.db = Database(collection="user")
 
     def get_all(self):
         try:
@@ -75,7 +75,7 @@ class UserDAO: # DAO - Data Access Object
         
     def update_user(self, data_user):
         try:
-            res = self.db.collection.update_one({"registration": data_user.register}, {"$set":  {"name": data_user.name,
+            res = self.db.collection.update_one({"registration": data_user.register_}, {"$set":  {"name": data_user.name,
                          "email": data_user.email,
                          "password": data_user.password}})
             print("res: ", res)

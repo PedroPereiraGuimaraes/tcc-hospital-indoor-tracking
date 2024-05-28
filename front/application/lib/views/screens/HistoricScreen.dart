@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_import, unused_local_variable, prefer_const_constructors
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/Historyc.dart';
@@ -21,14 +23,9 @@ class _HistoricScreenState extends State<HistoricScreen> {
   Future<void> getHistoric() async {
     try {
       List<dynamic> historicData = await getEquipamentWithHistoric();
-      print('Data received from API: $historicData'); // Verifica os dados recebidos
       setState(() {
-        historicList = historicData.map((e) 
-          => Historic.fromJson(e)).toList();
+        historicList = historicData.map((e) => Historic.fromJson(e)).toList();
       });
-      //var date = historicList[0].inicialDate!.date;
-      //print('DATA: $date'); // Verifica se a lista está sendo preenchida corretamente
-      print('Historic List: $historicList'); // Verifica se a lista está sendo preenchida corretamente
     } catch (error) {
       print('Error fetching historic data: $error');
     }
@@ -70,6 +67,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
               ),
             ),
             SizedBox(height: 20),
+            // COLOCAR NA MESMA LINHA
             Expanded(
               child: ListView.builder(
                 itemCount: historicList.length,
@@ -86,11 +84,12 @@ class _HistoricScreenState extends State<HistoricScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: NavBar(currentIndex: 3),
+      bottomNavigationBar: NavBar(currentIndex: 2),
     );
   }
 
-  Widget _buildTextField(String hint, TextEditingController controller, IconData icon, bool isPassword) {
+  Widget _buildTextField(String hint, TextEditingController controller,
+      IconData icon, bool isPassword) {
     return TextField(
       controller: controller,
       obscureText: isPassword,
@@ -121,7 +120,6 @@ class _HistoricScreenState extends State<HistoricScreen> {
   }
 
   Widget CardRoom(String equipamentName, String room, String inicialDate) {
-    print('Equipament Name: $equipamentName, Room: $room, Date: $inicialDate');
     return Card(
       child: ExpansionTile(
         title: Text(
@@ -144,7 +142,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
               ),
             ),
             subtitle: Text(
-              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(inicialDate))}", // Formata a data como string ISO
+              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(inicialDate))}",
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,

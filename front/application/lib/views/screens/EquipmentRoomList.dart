@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, ignore_for_file: file_names, unused_import, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/EquipamentRoom.dart';
@@ -8,31 +8,29 @@ import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:front_end/database/models/Room.dart';
+
 class EquipmentRoomList extends StatefulWidget {
   final String roomName;
   const EquipmentRoomList({Key? key, required this.roomName}) : super(key: key);
   @override
   State<EquipmentRoomList> createState() => _EquipmentRoomListState();
 }
+
 class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
-  
+
   List<dynamic> equipamentList = [];
-  late final EquipamentName = ''; 
+  late final EquipamentName = '';
 
   Future<void> getEquipaments() async {
     String roomName = widget.roomName;
-    print('sala ${widget.roomName}');
-    //getReadOne(roomName);
     List<dynamic> equipaments = await getReadOne(roomName);
-    equipamentList = equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
-    var listOsEq = equipamentList.map((e) => e.equipments).toList();
-    var lp = listOsEq[0];
-    print('equipamentList $lp');
+    equipamentList =
+        equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
     setState(() {
       equipamentList = equipamentList;
-      
     });
+    print(equipamentList[0].equipments[0].equipment);
   }
 
   @override
@@ -40,7 +38,6 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
     super.initState();
     getEquipaments();
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -76,15 +73,19 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
               ),
             ),
             SizedBox(height: 20),
+            // COLOCAR AWAIT AQUI
             Expanded(
               child: ListView.builder(
-                itemCount: equipamentList.length,
+                itemCount: equipamentList[0].equipments.length,
                 itemBuilder: (context, index) {
                   final searchQuery = _searchController.text.toLowerCase();
                   return EquipamentName.contains(searchQuery)
                       ? CardEquipament(
-                        'Raio-X', '1234' , '26/05/2024',
-                          DateTime.now())
+                          equipamentList[0].equipments[index].equipment,
+                          widget.roomName,
+                          equipamentList[0].equipments[index].patrimonio,
+                          DateTime.now(),
+                        )
                       : SizedBox.shrink();
                 },
               ),
@@ -126,7 +127,11 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
   }
 
   Widget CardEquipament(
-      String name, String room, String patrimonio, DateTime time) {
+    String name,
+    String room,
+    String patrimonio,
+    DateTime time,
+  ) {
     return Card(
       color: Colors.white,
       shadowColor: Colors.blue,

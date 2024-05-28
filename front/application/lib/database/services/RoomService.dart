@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-const String URL = 'http://localhost:8000';
+//const String URL = 'http://localhost:8000';
+const String URL = 'http://10.0.2.2:8000';
 
 Future<List<dynamic>> getReadAll() async {
   var url = Uri.parse("$URL/room/read-all");
@@ -9,7 +10,6 @@ Future<List<dynamic>> getReadAll() async {
 
   try {
     if (response.statusCode == 200) {
-      print('Room found ${jsonDecode(response.body)}');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load Room');
@@ -18,6 +18,7 @@ Future<List<dynamic>> getReadAll() async {
     return Future.error('Failed to $e');
   }
 }
+
 Future<dynamic> createRoom(String name) async {
   var url = Uri.parse('$URL/room/create');
   final headers = {
@@ -30,7 +31,6 @@ Future<dynamic> createRoom(String name) async {
 
   try {
     if (response.statusCode == 200) {
-      print('Room created');
       return "Success";
     } else {
       throw Exception('Failed to create Room');
@@ -39,13 +39,13 @@ Future<dynamic> createRoom(String name) async {
     throw Exception('Failed to $e');
   }
 }
+
 Future<dynamic> getReadOne(String name) async {
   var url = Uri.parse('$URL/room/read-one?name=$name');
   var response = await http.get(url);
 
   try {
     if (response.statusCode == 200) {
-      print('Room found ${jsonDecode(response.body)}');
       return [jsonDecode(response.body)];
     } else {
       throw Exception('Failed to load Room');

@@ -10,7 +10,7 @@ class UserDAO: # DAO - Data Access Object
     def get_all(self):
         try:
             res = self.db.collection.find()
-            print("total users: ", res)
+            # print("total users: ", res)
 
             parsed_json = json.loads(json_util.dumps(res))
 
@@ -19,11 +19,20 @@ class UserDAO: # DAO - Data Access Object
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
             return None
         
+    def get_user_by_register(self, register):
+        try:
+            res = self.db.collection.find_one({"registration": register})
+
+            return res
+        except Exception as e:
+            return None
+
+        
     def create_user(self, new_user):
         try:
 
-            if self.db.collection.find_one({"registration": new_user.register_}) != None:
-                return {"Error messagem": "Usuário existente"}
+            # if self.db.collection.find_one({"registration": new_user.register_}) != None:
+            #     return {"error": "Usuário existente"}
             
             user_json = {"name": new_user.name,
                          "email": new_user.email,
@@ -35,16 +44,13 @@ class UserDAO: # DAO - Data Access Object
             return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
-
+            return None
 
     def login_authentication(self, email, password):
         try:
             res = self.db.collection.find_one({"email": email, "password": password})
             
             parsed_json = json.loads(json_util.dumps(res))
-            print(res)
-
 
             return parsed_json
         except Exception as e:
@@ -54,11 +60,12 @@ class UserDAO: # DAO - Data Access Object
     def change_admin(self, register, is_admin):
         try:
             res = self.db.collection.update_one({"registration": register}, {"$set": {"isAdmin": is_admin}})
+            print(res.raw_result['updatedExisting'])
 
             return res.raw_result['updatedExisting']
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
+            return None
     
     def delete_user(self, register):
         try:
@@ -71,7 +78,7 @@ class UserDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
+            return None
         
     def update_user(self, data_user):
         try:
@@ -88,7 +95,7 @@ class UserDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
+            return None
         
     
     

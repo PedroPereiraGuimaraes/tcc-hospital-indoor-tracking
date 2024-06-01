@@ -14,7 +14,7 @@ def test_read_one_room(client: TestClient) -> None:
     response = client.get(f"/room/read-one?name={param}")
     assert response.status_code == 200
 
-def test_deleteUser(client: TestClient):
+def test_delete_room(client: TestClient):
     # getting uuid to pass as parameter to delete room
     param = "sala 1"
     aux_response = client.get(f"/room/read-one?name={param}")

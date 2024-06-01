@@ -22,8 +22,8 @@ class RoomDAO: # DAO - Data Access Object
         try:
             uuid_room = str(uuid.uuid4())
 
-            if self.read_one(new_room_name) != (None and True):
-                return {"Error message": "Sala já existente"}
+            # if self.read_one(new_room_name) != (None and True):
+            #     return {"Error message": "Sala já existente"}
 
             
             room_json = {"name": new_room_name, "uuid": uuid_room}
@@ -39,9 +39,9 @@ class RoomDAO: # DAO - Data Access Object
             res = self.db.collection.find_one({"name": name})
             print("one room: ", res)
 
-            parsed_json = json.loads(json_util.dumps(res))
+            # parsed_json = json.loads(json_util.dumps(res))
 
-            return parsed_json
+            return res
         except Exception as e:
             return False
         
@@ -55,4 +55,4 @@ class RoomDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar apagar a sala:  {e}")
-            return False
+            return None

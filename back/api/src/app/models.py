@@ -20,7 +20,7 @@ class User_login(BaseModel):
     password: str
 
 class New_user_admin(BaseModel):
-    register_new_user: str
+    register_: str
     is_admin: bool
 
 class Room_data(BaseModel):

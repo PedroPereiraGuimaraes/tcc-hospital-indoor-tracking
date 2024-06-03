@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-//const String URL = 'http://localhost:8000';
-const String URL = 'http://10.0.2.2:8000';
+const String URL = 'http://localhost:8000';
+//const String URL = 'http://10.0.2.2:8000';
 
 Future<String> authenticate(String email, String password) async {
   final url = Uri.parse('$URL/user/login');

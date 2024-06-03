@@ -18,13 +18,13 @@ class HistoricScreen extends StatefulWidget {
 
 class _HistoricScreenState extends State<HistoricScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<Historic> historicList = [];
+  Map<String, List<dynamic>> equipamentWithHistoricMap = {};
 
   Future<void> getHistoric() async {
     try {
-      List<dynamic> historicData = await getEquipamentWithHistoric();
+      Map<String, List<dynamic>> historicData = await getEquipamentWithHistoric();
       setState(() {
-        historicList = historicData.map((e) => Historic.fromJson(e)).toList();
+        equipamentWithHistoricMap = historicData;
       });
     } catch (error) {
       print('Error fetching historic data: $error');
@@ -67,17 +67,13 @@ class _HistoricScreenState extends State<HistoricScreen> {
               ),
             ),
             SizedBox(height: 20),
-            // COLOCAR NA MESMA LINHA
             Expanded(
               child: ListView.builder(
-                itemCount: historicList.length,
+                itemCount: equipamentWithHistoricMap.length,
                 itemBuilder: (context, index) {
-                  final historic = historicList[index];
-                  return CardRoom(
-                    historicList[index].equipamentName!,
-                    historicList[index].room!,
-                    '2022-01-01',
-                  );
+                  String equipamentName = equipamentWithHistoricMap.keys.elementAt(index);
+                  List<dynamic> historyList = equipamentWithHistoricMap[equipamentName]!;
+                  return CardRoom(equipamentName, historyList);
                 },
               ),
             ),
@@ -88,8 +84,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
     );
   }
 
-  Widget _buildTextField(String hint, TextEditingController controller,
-      IconData icon, bool isPassword) {
+  Widget _buildTextField(String hint, TextEditingController controller, IconData icon, bool isPassword) {
     return TextField(
       controller: controller,
       obscureText: isPassword,
@@ -119,7 +114,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
     );
   }
 
-  Widget CardRoom(String equipamentName, String room, String inicialDate) {
+  Widget CardRoom(String equipamentName, List<dynamic> historyList) {
     return Card(
       child: ExpansionTile(
         title: Text(
@@ -131,10 +126,10 @@ class _HistoricScreenState extends State<HistoricScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        children: [
-          ListTile(
+        children: historyList.map((history) {
+          return ListTile(
             title: Text(
-              "Room: $room",
+              "Room: ${history['room']}",
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -142,15 +137,15 @@ class _HistoricScreenState extends State<HistoricScreen> {
               ),
             ),
             subtitle: Text(
-              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(inicialDate))}",
+              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(history['inicial_date']['\$date']))}",
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
                 fontSize: 15,
               ),
             ),
-          ),
-        ],
+          );
+        }).toList(),
       ),
     );
   }

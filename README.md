@@ -1,3 +1,6 @@
+[![Python application](https://github.com/PedroPereiraGuimaraes/tcc-hospital-indoor-tracking/actions/workflows/python-app.yml/badge.svg)](https://github.com/PedroPereiraGuimaraes/tcc-hospital-indoor-tracking/actions/workflows/python-app.yml)
+[![Flutter CI](https://github.com/PedroPereiraGuimaraes/tcc-hospital-indoor-tracking/actions/workflows/flutter-app.yml/badge.svg)](https://github.com/PedroPereiraGuimaraes/tcc-hospital-indoor-tracking/actions/workflows/flutter-app.yml)
+
 # TCC-hospital--indoor-tracking
 
 **Coleta de Dados:**

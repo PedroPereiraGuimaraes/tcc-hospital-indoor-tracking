@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         '/rooms': (context) => RoomsScreen(),
         '/equipments': (context) => EquipmentListScreen(),
         '/admin': (context) => AdminScreen(),
-        '/profile': (context) => ProfileScreen(),
+        // '/profile': (context) => ProfileScreen(),
         '/historic': (context) => HistoricScreen(),
       },
       theme: ThemeData(primaryColor: Colors.blue, primarySwatch: Colors.blue),

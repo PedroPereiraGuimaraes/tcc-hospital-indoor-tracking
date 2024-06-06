@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import pandas as pd
 
-mqtt_server = "192.168.180.86"
+mqtt_server = "192.168.179.86"
 MacList = []
 RowsZeros = []
 df = pd.DataFrame()
@@ -56,7 +56,7 @@ class ClassConnect:
             print(df)
 
     def start(self):
-        self.client.connect(mqtt_ip, 1883, 60)  # Conecte-se ao broker MQTT
+        self.client.connect(mqtt_server, 1883, 60)  # Conecte-se ao broker MQTT
         self.client.loop_forever()  # Mantenha o cliente conectado e recebendo mensagens
 
 # Criar uma instância da classe e iniciar a conexão

@@ -2,9 +2,8 @@
 .vscode
 
 *__pycache__
-__init__.py
 back/api/.env
 AutogluonModels
-
-*__init__.py
 *.env
+archive
+output.json

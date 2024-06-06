@@ -27,7 +27,7 @@ class EquipmentDAO: # DAO - Data Access Object
             return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
 
     def read_one(self, patrimonio):
         try:
@@ -60,7 +60,7 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
         
     def delete(self, patrimonio):
         try:
@@ -72,7 +72,7 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
         
     def get_history(self, patrimonio):
         try:
@@ -97,4 +97,4 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar atualizar o manutenção: {e}")
-            return False
+            return None

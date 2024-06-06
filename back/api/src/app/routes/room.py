@@ -19,7 +19,7 @@ def create_room(room: Room_data):
 
     room_ = roomDAO.read_one(room.name)
     if room_:
-        raise HTTPException(status_code=400, detail="This room already exists")
+        raise HTTPException(status_code=409, detail="This room already exists")
     status_creation = roomDAO.create(room.name)
 
     if status_creation == None:
@@ -34,9 +34,10 @@ def read_one_room(name: str):
     room = roomDAO.read_one(name)
     
     if room == None:
-        raise HTTPException(status_code=401, detail="Room not found")
+        raise HTTPException(status_code=404, detail="Room not found")
+    if room == False:
+        raise HTTPException(status_code=500)
     
-
     return room
 
 @router.delete("/delete", status_code=status.HTTP_200_OK)
@@ -45,7 +46,7 @@ def delete_room(uuid: str):
     status = roomDAO.delete(uuid)
 
     if status == False:
-        raise HTTPException(status_code=401, detail="Room not found")
+        raise HTTPException(status_code=404, detail="Room not found")
     elif status == None:        
         raise HTTPException(status_code=500)
 

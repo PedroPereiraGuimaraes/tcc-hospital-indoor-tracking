@@ -39,9 +39,9 @@ class RoomDAO: # DAO - Data Access Object
             res = self.db.collection.find_one({"name": name})
             print("one room: ", res)
 
-            # parsed_json = json.loads(json_util.dumps(res))
+            parsed_json = json.loads(json_util.dumps(res))
 
-            return res
+            return parsed_json
         except Exception as e:
             return False
         

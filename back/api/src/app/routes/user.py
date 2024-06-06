@@ -19,7 +19,7 @@ def create_new_user(new_user: User):
     userDAO = UserDAO()
     user = userDAO.get_user_by_register(new_user.register_)
     if user:
-        raise HTTPException(status_code=400, detail="User with this register already exists")
+        raise HTTPException(status_code=409, detail="User with this register already exists")
 
     creation_status = userDAO.create_user(new_user)
 
@@ -44,7 +44,7 @@ def changeAdmin(new_user_admin:New_user_admin):
     user_updated = userDAO.change_admin(new_user_admin.register_, new_user_admin.is_admin)
 
     if user_updated == False:
-        raise HTTPException(status_code=401, detail="User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     elif user_updated == None:
         raise HTTPException(status_code=500)
 
@@ -57,7 +57,7 @@ def deleteUser(user_register: str):
     status = userDAO.delete_user(user_register)
 
     if status == False:
-        raise HTTPException(status_code=401, detail="User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     elif status == None:        
         raise HTTPException(status_code=500)
 
@@ -69,7 +69,7 @@ def update_user(update_user: User):
     creation_status = userDAO.update_user(update_user)
 
     if creation_status == False:
-        raise HTTPException(status_code=401, detail="User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     elif creation_status == None:        
         raise HTTPException(status_code=500)
     

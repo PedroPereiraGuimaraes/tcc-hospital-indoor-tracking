@@ -7,7 +7,6 @@ from main import api
 
 @pytest.fixture(scope="function")
 def client() -> Generator:
-    
     with TestClient(api) as client:
         yield client
 

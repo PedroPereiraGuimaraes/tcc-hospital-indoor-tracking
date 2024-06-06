@@ -13,8 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  test: 
     runs-on: ubuntu-latest
 
     steps:
@@ -37,3 +36,8 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name: Upload coverage report artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: back/api/test

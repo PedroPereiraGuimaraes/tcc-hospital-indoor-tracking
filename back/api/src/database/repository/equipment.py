@@ -1,14 +1,14 @@
-from database.connection_db import Database
+from src.database.connection_db import Database
 import json
 from bson import json_util 
 
 class EquipmentDAO: # DAO - Data Access Object
     def __init__(self):
-        self.db = Database(database="indoor_db", collection="equipment")
+        self.db = Database(collection="equipment")
 
     def get_all(self):
         try:
-            res = self.db.collection.find()
+            res = self.db.collection.find({}, {"_id": 0, "name": 1,"patrimonio": 1, "maintenance": 1, "current_room": 1, "current_date": 1})
 
             parsed_json = json.loads(json_util.dumps(res))
             return parsed_json
@@ -21,15 +21,13 @@ class EquipmentDAO: # DAO - Data Access Object
         try:
             user_json = {"name": new_equipment.name,
                          "patrimonio": new_equipment.patrimonio,
-                         "maintenance": new_equipment.maintenance,
-                         "current_room": new_equipment.current_room,
-                         "current_date": new_equipment.current_date}
+                         "maintenance": False}
             res = self.db.collection.insert_one(user_json)
             
             return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
 
     def read_one(self, patrimonio):
         try:
@@ -62,7 +60,7 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
         
     def delete(self, patrimonio):
         try:
@@ -74,7 +72,7 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
         
     def get_history(self, patrimonio):
         try:
@@ -99,4 +97,4 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar atualizar o manutenção: {e}")
-            return False
+            return None

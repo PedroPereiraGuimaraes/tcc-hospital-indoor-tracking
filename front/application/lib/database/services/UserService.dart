@@ -36,7 +36,7 @@ Future<String> authenticate(String email, String password) async {
 
 Future<String> registerUser(
     String name, String register, String password, String email) async {
-  final url = Uri.parse('$URL/user/create');
+  final url = Uri.parse('http://localhost:8000/user/create');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -62,13 +62,12 @@ Future<String> registerUser(
       throw Exception('Failed to register user: $errorMessage');
     }
   } catch (e) {
-    throw Exception(
-        'An error occurred while registering user: ${e.toString()}');
+    throw Exception('An error occurred while registering user: ${e.toString()}');
   }
 }
 
 Future<List> getAllUsers() async {
-  final url = Uri.parse('$URL/user/read-all');
+  final url = Uri.parse('http://localhost:8000/user/read-all');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -87,13 +86,12 @@ Future<List> getAllUsers() async {
       throw Exception('Failed to get all users: $errorMessage');
     }
   } catch (e) {
-    throw Exception(
-        'An error occurred while getting all users: ${e.toString()}');
+    throw Exception('An error occurred while getting all users: ${e.toString()}');
   }
 }
 
 Future<String> changeUserAdmin(String register, bool isAdmin) async {
-  final url = Uri.parse('$URL/user/change-user-admin');
+  final url = Uri.parse('http://localhost:8000/user/change-user-admin');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -118,13 +116,12 @@ Future<String> changeUserAdmin(String register, bool isAdmin) async {
       throw Exception('Failed to change user admin: $errorMessage');
     }
   } catch (e) {
-    throw Exception(
-        'An error occurred while changing user admin: ${e.toString()}');
+    throw Exception('An error occurred while changing user admin: ${e.toString()}');
   }
 }
 
 Future<String> deleteUser(String register) async {
-  final url = Uri.parse('$URL/user/delete');
+  final url = Uri.parse('http://localhost:8000/user/delete');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -154,7 +151,7 @@ Future<String> deleteUser(String register) async {
 // atualizar usuário
 Future<String> updateUser(
     String name, String register, String password, String email) async {
-  final url = Uri.parse('$URL/user/update');
+  final url = Uri.parse('http://localhost:8000/user/update');
   final headers = {
     'Content-Type': 'application/json',
   };

@@ -5,7 +5,6 @@ import 'package:front_end/views/screens/AdminScreen.dart';
 import 'package:front_end/views/screens/EquipmentListScreen.dart';
 import 'package:front_end/views/screens/HistoricScreen.dart';
 import 'package:front_end/views/screens/LoginScreen.dart';
-import 'package:front_end/views/screens/ProfileScreen.dart';
 import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:front_end/views/screens/SplashScreen.dart';
 import 'package:front_end/views/screens/RegisterScreen.dart';

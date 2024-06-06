@@ -1,16 +1,16 @@
-from database.connection_db import Database
+from src.database.connection_db import Database
 import json
 from bson import json_util 
 # import attr
 
 class UserDAO: # DAO - Data Access Object
     def __init__(self):
-        self.db = Database(database="indoor_db", collection="user")
+        self.db = Database(collection="user")
 
     def get_all(self):
         try:
             res = self.db.collection.find()
-            print("total users: ", res)
+            # print("total users: ", res)
 
             parsed_json = json.loads(json_util.dumps(res))
 
@@ -19,32 +19,38 @@ class UserDAO: # DAO - Data Access Object
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
             return None
         
+    def get_user_by_register(self, register):
+        try:
+            res = self.db.collection.find_one({"registration": register})
+
+            return res
+        except Exception as e:
+            return None
+
+        
     def create_user(self, new_user):
         try:
 
-            if self.db.collection.find_one({"registration": new_user.register}) != None:
-                return {"Error messagem": "Usuário existente"}
+            # if self.db.collection.find_one({"registration": new_user.register_}) != None:
+            #     return {"error": "Usuário existente"}
             
             user_json = {"name": new_user.name,
                          "email": new_user.email,
                          "password": new_user.password,
-                         "registration": new_user.register,
+                         "registration": new_user.register_,
                          "isAdmin": False}
             res = self.db.collection.insert_one(user_json)
             
             return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
-
+            return None
 
     def login_authentication(self, email, password):
         try:
             res = self.db.collection.find_one({"email": email, "password": password})
             
             parsed_json = json.loads(json_util.dumps(res))
-            print(res)
-
 
             return parsed_json
         except Exception as e:
@@ -54,11 +60,12 @@ class UserDAO: # DAO - Data Access Object
     def change_admin(self, register, is_admin):
         try:
             res = self.db.collection.update_one({"registration": register}, {"$set": {"isAdmin": is_admin}})
+            print(res.raw_result['updatedExisting'])
 
             return res.raw_result['updatedExisting']
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
+            return None
     
     def delete_user(self, register):
         try:
@@ -71,11 +78,11 @@ class UserDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
+            return None
         
     def update_user(self, data_user):
         try:
-            res = self.db.collection.update_one({"registration": data_user.register}, {"$set":  {"name": data_user.name,
+            res = self.db.collection.update_one({"registration": data_user.register_}, {"$set":  {"name": data_user.name,
                          "email": data_user.email,
                          "password": data_user.password}})
             print("res: ", res)
@@ -88,7 +95,7 @@ class UserDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os usuários: {e}")
-            return False
+            return None
         
     
     

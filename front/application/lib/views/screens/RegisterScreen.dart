@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/views/screens/LoginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:front_end/database/services/UserService.dart';
-
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -25,100 +23,99 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String email = _emailController.text;
     String password = _passwordController.text;
     String registerNumber = _registerNumberController.text;
-    registerUser(name, registerNumber, password, email).then((result){
-      if (result == 'Success') {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              title: Text(
-                'Registro completo!',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 0, 129, 223),
-                  fontFamily: GoogleFonts.josefinSans().fontFamily,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
+
+    if (email == '' && password == '' && name == '' && registerNumber == '') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: Text(
+              'Registro completo!',
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 129, 223),
+                fontFamily: GoogleFonts.josefinSans().fontFamily,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
               ),
-              content: Text(
-                'Obrigado por se registrar conosco. Faça login para continuar.',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: GoogleFonts.josefinSans().fontFamily,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w300,
-                ),
+            ),
+            content: Text(
+              'Obrigado por se registrar conosco. Faça login para continuar.',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: GoogleFonts.josefinSans().fontFamily,
+                fontSize: 17,
+                fontWeight: FontWeight.w300,
               ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'OK',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 0, 129, 223),
-                      fontFamily: GoogleFonts.josefinSans().fontFamily,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
                     ),
+                  );
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 0, 129, 223),
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
-              ],
-            );
-          },
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              title: Text(
-                'ERRO',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 0, 129, 223),
-                  fontFamily: GoogleFonts.josefinSans().fontFamily,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
               ),
-              content: Text(
-                'Alguns dados estão incompletos. Por favor, tente novamente.',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: GoogleFonts.josefinSans().fontFamily,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w300,
-                ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: Text(
+              'ERRO',
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 129, 223),
+                fontFamily: GoogleFonts.josefinSans().fontFamily,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
               ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    'OK',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 0, 129, 223),
-                      fontFamily: GoogleFonts.josefinSans().fontFamily,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300,
-                    ),
+            ),
+            content: Text(
+              'Alguns dados estão incompletos. Por favor, tente novamente.',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: GoogleFonts.josefinSans().fontFamily,
+                fontSize: 17,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 0, 129, 223),
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
-              ],
-            );
-          },
-        );
-      }
-    });
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override

@@ -1,11 +1,11 @@
-from database.connection_db import Database
+from src.database.connection_db import Database
 import json
 import uuid
 from bson import json_util 
 
 class RoomDAO: # DAO - Data Access Object
     def __init__(self):
-        self.db = Database(database="indoor_db", collection="room")
+        self.db = Database(collection="room")
 
     def get_all(self):
         try:
@@ -22,8 +22,8 @@ class RoomDAO: # DAO - Data Access Object
         try:
             uuid_room = str(uuid.uuid4())
 
-            if self.read_one(new_room_name) != None:
-                return {"Error message": "Sala já existente"}
+            # if self.read_one(new_room_name) != (None and True):
+            #     return {"Error message": "Sala já existente"}
 
             
             room_json = {"name": new_room_name, "uuid": uuid_room}
@@ -55,4 +55,4 @@ class RoomDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar apagar a sala:  {e}")
-            return False
+            return None

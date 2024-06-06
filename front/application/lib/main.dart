@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/views/screens/AdminScreen.dart';
 import 'package:front_end/views/screens/EquipmentListScreen.dart';
+import 'package:front_end/views/screens/HistoricScreen.dart';
 import 'package:front_end/views/screens/LoginScreen.dart';
 import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:front_end/views/screens/SplashScreen.dart';
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Coffe Application",
-      initialRoute: '/equipments',
+      title: "Hospital Indoor Tracking System",
+      initialRoute: '/rooms',
       routes: {
         '/splash': (context) => SplashScreen(),
         '/login': (context) => LoginScreen(),
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
         '/rooms': (context) => RoomsScreen(),
         '/equipments': (context) => EquipmentListScreen(),
         '/admin': (context) => AdminScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/historic': (context) => HistoricScreen(),
       },
       theme: ThemeData(primaryColor: Colors.blue, primarySwatch: Colors.blue),
     );

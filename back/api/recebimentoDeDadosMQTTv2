@@ -1,0 +1,73 @@
+import paho.mqtt.client as mqtt
+import pandas as pd
+
+mqtt_server = "192.168.179.86"
+MacList = []
+RowsZeros = []
+df = pd.DataFrame()
+counter = 0
+
+class ClassConnect:
+    def __init__(self):
+        # Initialize the MQTT client
+        self.client = mqtt.Client()
+        self.client.on_connect = self.on_connect
+        self.client.on_message = self.on_message
+
+    def on_connect(self, client, userdata, flags, rc):
+        print("Connected with result code " + str(rc))
+        client.subscribe("routerinfo")  # Subscribe to the desired topic
+
+    def on_message(self, client, userdata, msg):
+        global df, RowsZeros  # Referencing global variables
+        payload = msg.payload.decode('utf-8')  # Decode bytes to a UTF-8 string
+        print("Message (" + msg.topic + "): " + payload)
+
+        try:
+            if self.update_dataset(payload):
+                # Add new columns to the DataFrame for any new MACs
+                for mac in MacList:
+                    if mac not in df.columns:
+                        df[mac] = 0  # Initialize the new column with zeros
+                # Reinitialize RowsZeros with zeros for all columns
+                RowsZeros = [0] * len(MacList)
+
+            self.update_rows(payload)
+        except Exception as e:
+            print(f"Error processing message: {e}")
+
+    def update_dataset(self, payload):
+        if payload != 'START' and payload != 'FIM':
+            dispName, ssid, mac, speed = payload.split(',')
+            if ssid == 'WLL-Inatel' and mac not in MacList:
+                MacList.append(mac)
+                return True
+        return False
+
+    def update_rows(self, payload):
+        global df, RowsZeros  # Referencing global variables
+        if payload != 'START' and payload != 'FIM' and len(RowsZeros) > 0 and len(MacList) > 0:
+            dispName, ssid, mac, speed = payload.split(',')
+            if ssid == 'WLL-Inatel' and mac in MacList:
+                RowsZeros[MacList.index(mac)] = int(speed)
+        elif payload == 'FIM':
+            # Add RowsZeros as a new row in the DataFrame
+            new_row = pd.DataFrame([RowsZeros], columns=MacList)
+            df = pd.concat([df, new_row], ignore_index=True)
+            # Reinitialize RowsZeros with zeros for all columns
+            RowsZeros = [0] * len(MacList)
+            # Save the DataFrame to a CSV file always with the same name
+            df.to_csv("dataframe.csv", index=False)
+            print("DataFrame saved as dataframe.csv")
+            print(df)
+
+    def start(self):
+        try:
+            self.client.connect(mqtt_server, 1883, 60)  # Connect to the MQTT broker
+            self.client.loop_forever()  # Keep the client connected and receiving messages
+        except Exception as e:
+            print(f"Error connecting to MQTT server: {e}")
+
+# Create an instance of the class and start the connection
+mqtt_client = ClassConnect()
+mqtt_client.start()

@@ -1,10 +1,13 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, ignore_for_file: file_names, unused_import, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:front_end/database/models/EquipamentRoom.dart';
+import 'package:front_end/database/services/RoomService.dart';
 import 'package:front_end/views/screens/EquipamentInfoScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:front_end/database/models/Room.dart';
 
 class EquipmentRoomList extends StatefulWidget {
   final String roomName;
@@ -15,13 +18,32 @@ class EquipmentRoomList extends StatefulWidget {
 
 class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> EquipamentNames =
-      List.generate(10, (index) => "Equipamento $index");
+
+  List<dynamic> equipamentList = [];
+  late final EquipamentName = '';
+
+  Future<void> getEquipaments() async {
+    String roomName = widget.roomName;
+    List<dynamic> equipaments = await getReadOne(roomName);
+    equipamentList =
+        equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
+    setState(() {
+      equipamentList = equipamentList;
+    });
+    print(equipamentList[0].equipments[0].equipment);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getEquipaments();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isRoom: false,
         isAdmin: false,
         hasBackButton: true,
       ),
@@ -51,15 +73,19 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
               ),
             ),
             SizedBox(height: 20),
+            // COLOCAR AWAIT AQUI
             Expanded(
               child: ListView.builder(
-                itemCount: EquipamentNames.length,
+                itemCount: equipamentList[0].equipments.length,
                 itemBuilder: (context, index) {
-                  final EquipamentName = EquipamentNames[index].toLowerCase();
                   final searchQuery = _searchController.text.toLowerCase();
                   return EquipamentName.contains(searchQuery)
-                      ? CardEquipament(EquipamentNames[index], "Sala 1", "1234",
-                          DateTime.now())
+                      ? CardEquipament(
+                          equipamentList[0].equipments[index].equipment,
+                          widget.roomName,
+                          equipamentList[0].equipments[index].patrimonio,
+                          DateTime.now(),
+                        )
                       : SizedBox.shrink();
                 },
               ),
@@ -101,7 +127,11 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
   }
 
   Widget CardEquipament(
-      String name, String room, String patrimonio, DateTime time) {
+    String name,
+    String room,
+    String patrimonio,
+    DateTime time,
+  ) {
     return Card(
       color: Colors.white,
       shadowColor: Colors.blue,

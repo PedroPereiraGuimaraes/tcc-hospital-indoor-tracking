@@ -24,6 +24,7 @@ class _AddEquipamentListState extends State<AddEquipamentList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isRoom: false,
         isAdmin: false,
         hasBackButton: true,
       ),

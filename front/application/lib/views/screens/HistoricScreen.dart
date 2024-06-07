@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:front_end/database/models/Equipament.dart';
 import 'package:front_end/database/models/Historyc.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
@@ -18,11 +19,13 @@ class HistoricScreen extends StatefulWidget {
 
 class _HistoricScreenState extends State<HistoricScreen> {
   final TextEditingController _searchController = TextEditingController();
-  Map<String, List<dynamic>> equipamentWithHistoricMap = {};
+  Map<dynamic, List<dynamic>> equipamentWithHistoricMap = {};
 
+  
   Future<void> getHistoric() async {
     try {
-      Map<String, List<dynamic>> historicData = await getEquipamentWithHistoric();
+      Map<dynamic, List<dynamic>> historicData = await getEquipamentWithHistoric();
+    
       setState(() {
         equipamentWithHistoricMap = historicData;
       });
@@ -127,6 +130,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
           ),
         ),
         children: historyList.map((history) {
+          print(history['inicial_date']);
           return ListTile(
             title: Text(
               "Room: ${history['room']}",

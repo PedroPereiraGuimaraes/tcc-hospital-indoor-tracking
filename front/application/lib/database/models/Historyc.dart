@@ -5,7 +5,7 @@ class Historic {
 
   Historic({this.inicialDate, this.room, this.equipamentName});
 
-  Historic.fromJson(Map<String, dynamic> json) {
+  Historic.fromJson(Map<dynamic, dynamic> json) {
     inicialDate = json['inicial_date'] != null
         ? new InicialDate.fromJson(json['inicial_date'])
         : null;
@@ -13,8 +13,8 @@ class Historic {
     equipamentName = json['equipament_name'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
     if (this.inicialDate != null) {
       data['inicial_date'] = this.inicialDate!.toJson();
     }
@@ -29,7 +29,7 @@ class InicialDate {
 
   InicialDate({this.date});
 
-  factory InicialDate.fromJson(Map<String, dynamic> json) {
+  factory InicialDate.fromJson(Map<dynamic, dynamic> json) {
     // Verifica se o JSON contém a chave "$date"
     if (json.containsKey("\$date")) {
       return InicialDate(date: json["\$date"]);
@@ -38,8 +38,8 @@ class InicialDate {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
     data['\$date'] = this.date;
     return data;
   }

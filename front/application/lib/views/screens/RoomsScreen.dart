@@ -38,7 +38,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: true,
-        isAdmin: true,
+        isAdmin: false,
         hasBackButton: false,
       ),
       body: Container(

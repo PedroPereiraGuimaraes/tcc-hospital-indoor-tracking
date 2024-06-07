@@ -4,12 +4,12 @@ import 'package:http/http.dart' as http;
 const String URL = 'http://localhost:8000';
 //const String URL = 'http://10.0.2.2:8000';
 
-Future<Map<String, List<dynamic>>> getEquipamentWithHistoric() async {
+Future<Map<dynamic, List<dynamic>>> getEquipamentWithHistoric() async {
   final response = await http.get(Uri.parse('$URL/equipament/read-all'));
 
   if (response.statusCode == 200) {
     var equipaments = jsonDecode(response.body);
-    Map<String, List<dynamic>> equipamentWithHistoricMap = {};
+    Map<dynamic, List<dynamic>> equipamentWithHistoricMap = {};
     
     for (var equipament in equipaments) {
       var name = equipament['name'];
@@ -19,6 +19,7 @@ Future<Map<String, List<dynamic>>> getEquipamentWithHistoric() async {
           equipamentWithHistoricMap[name] = [];
         }
         for (var h in historic) {
+          print('h: $h');
           h['equipament_name'] = name;
           equipamentWithHistoricMap[name]!.add(h);
         }

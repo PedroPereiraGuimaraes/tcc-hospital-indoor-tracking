@@ -75,51 +75,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
             ),
-            ListTile(
-              title: Text('Idioma',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: GoogleFonts.josefinSans().fontFamily,
-                    color: Colors.grey[800],
-                  )),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Color.fromARGB(255, 0, 129, 223),
-              ),
-              onTap: () {
-                // Navegar para a tela de seleção de idioma
-              },
-            ),
-            ListTile(
-              title: Text('Privacidade',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: GoogleFonts.josefinSans().fontFamily,
-                    color: Colors.grey[800],
-                  )),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Color.fromARGB(255, 0, 129, 223),
-              ),
-              onTap: () {
-                // Navegar para a tela de configurações de privacidade
-              },
-            ),
-            ListTile(
-              title: Text('Sobre',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: GoogleFonts.josefinSans().fontFamily,
-                    color: Colors.grey[800],
-                  )),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: Color.fromARGB(255, 0, 129, 223),
-              ),
-              onTap: () {
-                // Navegar para a tela de informações sobre o aplicativo
-              },
-            ),
+            // ListTile(
+            //   title: Text('Idioma',
+            //       style: TextStyle(
+            //         fontSize: 18,
+            //         fontFamily: GoogleFonts.josefinSans().fontFamily,
+            //         color: Colors.grey[800],
+            //       )),
+            //   trailing: Icon(
+            //     Icons.arrow_forward_ios,
+            //     color: Color.fromARGB(255, 0, 129, 223),
+            //   ),
+            //   onTap: () {
+            //     // Navegar para a tela de seleção de idioma
+            //   },
+            // ),
+            // ListTile(
+            //   title: Text('Privacidade',
+            //       style: TextStyle(
+            //         fontSize: 18,
+            //         fontFamily: GoogleFonts.josefinSans().fontFamily,
+            //         color: Colors.grey[800],
+            //       )),
+            //   trailing: Icon(
+            //     Icons.arrow_forward_ios,
+            //     color: Color.fromARGB(255, 0, 129, 223),
+            //   ),
+            //   onTap: () {
+            //     // Navegar para a tela de configurações de privacidade
+            //   },
+            // ),
+            // ListTile(
+            //   title: Text('Sobre',
+            //       style: TextStyle(
+            //         fontSize: 18,
+            //         fontFamily: GoogleFonts.josefinSans().fontFamily,
+            //         color: Colors.grey[800],
+            //       )),
+            //   trailing: Icon(
+            //     Icons.arrow_forward_ios,
+            //     color: Color.fromARGB(255, 0, 129, 223),
+            //   ),
+            //   onTap: () {
+            //     // Navegar para a tela de informações sobre o aplicativo
+            //   },
+            // ),
              ListTile(
               title: Text('Perfil',
                   style: TextStyle(

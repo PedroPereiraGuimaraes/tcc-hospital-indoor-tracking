@@ -4,30 +4,31 @@ import 'package:http/http.dart' as http;
 const String URL = 'http://localhost:8000';
 //const String URL = 'http://10.0.2.2:8000';
 
-Future<Map<dynamic, List<dynamic>>> getEquipamentWithHistoric() async {
-  final response = await http.get(Uri.parse('$URL/equipment/read-all'));
+Future<List<dynamic>> getEquipamentWithHistoric() async {
+  final response = await http.get(Uri.parse('$URL/equipment/history'));
 
   if (response.statusCode == 200) {
     var equipaments = jsonDecode(response.body);
-    Map<dynamic, List<dynamic>> equipamentWithHistoricMap = {};
-    print('equipaments: $equipaments');
+    print('historico: $equipaments');
+    // Map<dynamic, List<dynamic>> equipamentWithHistoricMap = {};
+    // print('equipaments: $equipaments');
     
-    for (var equipament in equipaments) {
-      var name = equipament['name'];
-      var historic = equipament['historic'];
-      if (historic != null) {
-        if (!equipamentWithHistoricMap.containsKey(name)) {
-          equipamentWithHistoricMap[name] = [];
-        }
-        for (var h in historic) {
-          print('h: $h');
-          h['equipament_name'] = name;
-          equipamentWithHistoricMap[name]!.add(h);
-        }
-      }
-    }
-    print(equipamentWithHistoricMap);
-    return equipamentWithHistoricMap;
+    // for (var equipament in equipaments) {
+    //   var name = equipament['name'];
+    //   var historic = equipament['historic'];
+    //   if (historic != null) {
+    //     if (!equipamentWithHistoricMap.containsKey(name)) {
+    //       equipamentWithHistoricMap[name] = [];
+    //     }
+    //     for (var h in historic) {
+    //       print('h: $h');
+    //       h['equipament_name'] = name;
+    //       equipamentWithHistoricMap[name]!.add(h);
+    //     }
+    //   }
+    // }
+    // print(equipamentWithHistoricMap);
+    return jsonDecode(response.body);
   } else {
     throw Exception('Failed to load historic data');
   }

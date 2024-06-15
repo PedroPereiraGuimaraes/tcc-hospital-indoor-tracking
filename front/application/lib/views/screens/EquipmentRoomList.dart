@@ -19,24 +19,10 @@ class EquipmentRoomList extends StatefulWidget {
 class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
 
-  List<dynamic> equipamentList = [];
-  late final EquipamentName = '';
-
-  Future<void> getEquipaments() async {
+  Future<List<EquipamentRoom>> getEquipaments() async {
     String roomName = widget.roomName;
     List<dynamic> equipaments = await getReadOne(roomName);
-    equipamentList =
-        equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
-    setState(() {
-      equipamentList = equipamentList;
-    });
-    print(equipamentList[0].equipments[0].equipment);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getEquipaments();
+    return equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
   }
 
   @override
@@ -73,20 +59,40 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
               ),
             ),
             SizedBox(height: 20),
-            // COLOCAR AWAIT AQUI
             Expanded(
-              child: ListView.builder(
-                itemCount: equipamentList[0].equipments.length,
-                itemBuilder: (context, index) {
-                  final searchQuery = _searchController.text.toLowerCase();
-                  return EquipamentName.contains(searchQuery)
-                      ? CardEquipament(
-                          equipamentList[0].equipments[index].equipment,
-                          widget.roomName,
-                          equipamentList[0].equipments[index].patrimonio,
-                          DateTime.now(),
-                        )
-                      : SizedBox.shrink();
+              child: FutureBuilder<List<EquipamentRoom>>(
+                future: getEquipaments(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Erro ao carregar os dados'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('Nenhum equipamento encontrado'));
+                  } else {
+                    final equipamentList = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: equipamentList[0].equipments?.length,
+                      itemBuilder: (context, index) {
+                        final equipmentName = equipamentList[0]
+                            .equipments![index]
+                            .equipment
+                            ?.toLowerCase();
+                        final searchQuery =
+                            _searchController.text.toLowerCase();
+                        return equipmentName!.contains(searchQuery)
+                            ? CardEquipament(
+                                equipamentList[0].equipments![index].equipment!,
+                                widget.roomName,
+                                equipamentList[0]
+                                    .equipments![index]
+                                    .patrimonio!,
+                                DateTime.now(),
+                              )
+                            : SizedBox.shrink();
+                      },
+                    );
+                  }
                 },
               ),
             ),

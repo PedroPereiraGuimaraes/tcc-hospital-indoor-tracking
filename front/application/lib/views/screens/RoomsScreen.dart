@@ -38,7 +38,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: true,
-        isAdmin: true,
+        isAdmin: false,
         hasBackButton: false,
       ),
       body: Container(
@@ -72,9 +72,9 @@ class _RoomsScreenState extends State<RoomsScreen> {
                 itemCount: roomsList.length,
                 itemBuilder: (context, index) {
                   final roomName = roomsList[index].name!.toLowerCase();
-                  final qEquipments = roomsList[index].equipments?.length ??
-                      0; // Usando operador de coalescência nula para fornecer um valor padrão
+                  final qEquipments = roomsList[index].equipments?.length ?? 0; 
                   final searchQuery = _searchController.text.toLowerCase();
+                  
                   return roomName.contains(searchQuery)
                       ? CardRoom(roomName.toUpperCase(), qEquipments)
                       : SizedBox.shrink();
@@ -135,7 +135,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
           ),
         ),
         subtitle: Text(
-          "Equipamentos:$equipments",
+          "Equipamentos: $equipments",
           style: TextStyle(
             color: Colors.black,
             fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -147,14 +147,34 @@ class _RoomsScreenState extends State<RoomsScreen> {
           color: Color.fromARGB(255, 0, 129, 223),
         ),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EquipmentRoomList(
-                roomName: name,
+          if (equipments == 0) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Informação'),
+                  content: Text('A lista está vazia'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EquipmentRoomList(
+                  roomName: name,
+                ),
               ),
-            ),
-          );
+            );
+          }
         },
       ),
     );

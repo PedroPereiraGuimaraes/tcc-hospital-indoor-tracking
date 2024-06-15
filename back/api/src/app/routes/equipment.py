@@ -73,9 +73,9 @@ def delete_equipment(patrimonio: str):
     return status
 
 @router.get("/history", status_code=status.HTTP_200_OK)
-def history_equipment(patrimonio: str):
+def history_equipment():
     equipmentDAO = EquipmentDAO()
-    status = equipmentDAO.get_history(patrimonio)
+    status = equipmentDAO.get_history()
 
     if status == []:
         raise HTTPException(status_code=404, detail="Equipment not found")

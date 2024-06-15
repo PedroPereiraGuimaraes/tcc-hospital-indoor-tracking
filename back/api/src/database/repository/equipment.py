@@ -75,9 +75,9 @@ class EquipmentDAO: # DAO - Data Access Object
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
             return None
         
-    def get_history(self, patrimonio):
+    def get_history(self):
         try:
-            res = self.db.collection.find({"patrimonio": patrimonio}, {"historic": 1})
+            res = self.db.collection.find({}, {"_id": 0, "name": 1,"historic": 1})
 
             parsed_json = json.loads(json_util.dumps(res))
             print("res historico:", parsed_json)

@@ -49,7 +49,7 @@ class ClassConnect:
             # Adicionar RowsZeros como uma nova linha no DataFrame
             df.loc[len(df)] = RowsZeros
 
-            # getRSSI(MacList, RowsZeros)
+            check_room(MacList, RowsZeros, dispName)
 
             # Reinicializar RowsZeros com zeros para todas as colunas
             RowsZeros = [0] * len(MacList)

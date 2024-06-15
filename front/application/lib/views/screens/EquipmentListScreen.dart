@@ -23,6 +23,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
     equipamentsList = equipaments.map((e) => Equipament.fromJson(e)).toList();
     setState(() {
       equipamentsList = equipamentsList;
+      equipaments = equipaments;
     });
   }
 
@@ -117,6 +118,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
   }
 
   Widget CardRoom(String name, String room, String patrimonio) {
+    print('name: $name, room: $room, patrimonio: $patrimonio');
     return Card(
       color: Colors.white,
       shadowColor: Colors.blue,
@@ -132,7 +134,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
           ),
         ),
         subtitle: Text(
-          "Última vez visto: $room",
+          "Última vez visto: Sala $room",
           style: TextStyle(
             color: Colors.black,
             fontFamily: GoogleFonts.josefinSans().fontFamily,

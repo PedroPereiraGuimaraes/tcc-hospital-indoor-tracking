@@ -25,7 +25,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
   Future<void> getHistoric() async {
     try {
       Map<dynamic, List<dynamic>> historicData = await getEquipamentWithHistoric();
-    
+      print('Historic data: $historicData');
       setState(() {
         equipamentWithHistoricMap = historicData;
       });

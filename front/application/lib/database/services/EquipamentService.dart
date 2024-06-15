@@ -5,7 +5,7 @@ const String URL = 'http://localhost:8000';
 //const String URL = 'http://10.0.2.2:8000';
 
 Future<List<dynamic>> getReadAll() async {
-  var url = Uri.parse("$URL/equipament/read-all");
+  var url = Uri.parse("$URL/equipment/read-all");
   var response = await http.get(url);
 
   try {

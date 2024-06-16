@@ -22,6 +22,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
   Future<void> getRooms() async {
     List<dynamic> rooms = await getReadAll();
     roomsList = rooms.map((e) => Room.fromJson(e)).toList();
+    print('rooms: $roomsList');
     setState(() {
       roomsList = roomsList;
     });
@@ -38,7 +39,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: true,
-        isAdmin: false,
+        isAdmin: true,
         hasBackButton: false,
       ),
       body: Container(

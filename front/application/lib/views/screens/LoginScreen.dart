@@ -5,6 +5,8 @@ import 'package:front_end/database/services/UserService.dart';
 import 'package:front_end/views/screens/RegisterScreen.dart';
 import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:front_end/database/models/SetUser.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -23,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
     String password = _passwordController.text;
     authenticate(register, password).then((result) {
       if (result == 'Success') {
+        var user = Provider.of(<User>(context, listen: false));
+        user.setUser('name', register, register, false);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

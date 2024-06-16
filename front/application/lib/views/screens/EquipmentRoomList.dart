@@ -30,7 +30,7 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: false,
-        isAdmin: false,
+        isAdmin: true,
         hasBackButton: true,
       ),
       body: Container(
@@ -144,7 +144,7 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
       elevation: 2,
       child: ListTile(
         title: Text(
-          name,
+          name.toUpperCase(),
           style: TextStyle(
             color: Color.fromARGB(255, 0, 129, 223),
             fontFamily: GoogleFonts.josefinSans().fontFamily,

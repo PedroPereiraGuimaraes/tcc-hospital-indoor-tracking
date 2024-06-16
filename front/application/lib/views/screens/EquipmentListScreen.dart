@@ -38,7 +38,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: false,
-        isAdmin: false,
+        isAdmin: true,
         hasBackButton: false,
       ),
       body: Container(

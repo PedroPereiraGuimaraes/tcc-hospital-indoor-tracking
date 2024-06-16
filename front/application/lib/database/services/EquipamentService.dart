@@ -10,6 +10,7 @@ Future<List<dynamic>> getReadAll() async {
 
   try {
     if (response.statusCode == 200) {
+      
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load Equipaments');
@@ -20,7 +21,7 @@ Future<List<dynamic>> getReadAll() async {
 }
 
 Future<dynamic> getReadOne(int patrimonio) async {
-  var url = Uri.parse('$URL/equipament/read-one?patrimonio=$patrimonio');
+  var url = Uri.parse('$URL/equipment/read-one?patrimonio=$patrimonio');
   var response = await http.get(url);
 
   try {
@@ -35,7 +36,6 @@ Future<dynamic> getReadOne(int patrimonio) async {
 }
 
 Future<List<dynamic>> getEquipmentsByCurrentRoom(String current_room) async {
-  print('current_room: $current_room');
   var url = Uri.parse(
       '$URL/equipament/get-equipments-by-current-room?current_room=$current_room');
   var response = await http.get(url);
@@ -50,24 +50,30 @@ Future<List<dynamic>> getEquipmentsByCurrentRoom(String current_room) async {
     return Future.error('Failed to $e');
   }
 }
-
-Future<dynamic> getHistory(int patrimonio) async {
-  var url = Uri.parse('$URL/equipament/history?patrimonio=$patrimonio');
-  var response = await http.get(url);
-
+Future<dynamic> createEquipment(String name) async {
+  var url = Uri.parse('$URL/equipment/create');
+  final headers = {
+    'Content-Type': 'application/json',
+  };
+  final body = jsonEncode({
+    "name": name,
+  });
+  var response = await http.post(url, headers: headers, body: body);
   try {
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+    if (response.statusCode == 201) {
+      return "Success";
     } else {
-      throw Exception('Failed to load Equipament');
+      throw Exception('Failed to create Room');
     }
   } catch (e) {
     throw Exception('Failed to $e');
   }
 }
 
+
+
 Future<dynamic> deleteEquipament(int patrimonio) async {
-  var url = Uri.parse('$URL/equipament/delete?patrimonio=$patrimonio');
+  var url = Uri.parse('$URL/equipment/delete?patrimonio=$patrimonio');
   var response = await http.delete(url);
 
   try {

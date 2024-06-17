@@ -6,7 +6,9 @@ import 'package:front_end/views/screens/RegisterScreen.dart';
 import 'package:front_end/views/screens/RoomsScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:front_end/database/models/User.dart';
 import 'package:front_end/database/models/SetUser.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,13 +22,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   String? token = "";
 
-  LoginCheck() {
+  void LoginCheck() {
     String register = _registerController.text;
     String password = _passwordController.text;
     authenticate(register, password).then((result) {
-      if (result == 'Success') {
-        var user = Provider.of(<User>(context, listen: false));
-        user.setUser('name', register, register, false);
+      if (result != null) {
+        var user = Provider.of<SUser>(context, listen: false);
+        user.setUser(result['name'], result['email'], register, result['isAdmin']);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

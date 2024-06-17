@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 const String URL = 'http://localhost:8000';
 //const String URL = 'http://10.0.2.2:8000';
 
-Future<String> authenticate(String email, String password) async {
+Future<Map<String, dynamic>> authenticate(String email, String password) async {
   final url = Uri.parse('$URL/user/login');
   final headers = {
     'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ Future<String> authenticate(String email, String password) async {
     );
 
     if (response.statusCode == 200) {
-      return 'Success';
+      return jsonDecode(response.body);
     } else {
       final errorMessage =
           jsonDecode(response.body)['message'] ?? 'Unknown error';
@@ -33,7 +33,6 @@ Future<String> authenticate(String email, String password) async {
     throw Exception('An error occurred while authenticating: ${e.toString()}');
   }
 }
-
 Future<String> registerUser(
     String name, String register, String password, String email) async {
   final url = Uri.parse('$URL/user/create');

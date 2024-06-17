@@ -12,12 +12,17 @@ import 'package:front_end/views/screens/SplashScreen.dart';
 import 'package:front_end/views/screens/RegisterScreen.dart';
 import 'package:provider/provider.dart';
 
+
+
+
 void main() async {
-  runApp(ChangeNotifierProvider(create: (context) => User(), child: MyApp()));
+  runApp(ChangeNotifierProvider(create: (context) => SUser(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+     
+    super.key});
 
   @override
   Widget build(BuildContext context) {

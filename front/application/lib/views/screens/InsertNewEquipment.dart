@@ -168,37 +168,37 @@ Widget CardEquipament(String equipamentName, DateTime lastMaintenance) {
             _nameController,
             false,
           ),
-          SizedBox(height: 20),
-          DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              labelText: 'Última vez visto',
-              labelStyle: TextStyle(
-                color: Color.fromARGB(255, 0, 129, 223),
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 14,
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Color.fromARGB(255, 0, 129, 223),
-                  width: 3.0,
-                ),
-              ),
-            ),
-            value: _selectedRoom,
-            items: _rooms.map((String room) {
-              return DropdownMenuItem<String>(
-                value: room,
-                child: Text(room),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                _selectedRoom = newValue!;
-              });
-            },
-          ),
+          //SizedBox(height: 20),
+          // DropdownButtonFormField<String>(
+          //   decoration: InputDecoration(
+          //     labelText: 'Última vez visto',
+          //     labelStyle: TextStyle(
+          //       color: Color.fromARGB(255, 0, 129, 223),
+          //       fontFamily: GoogleFonts.josefinSans().fontFamily,
+          //       fontSize: 14,
+          //     ),
+          //     filled: true,
+          //     fillColor: Colors.white,
+          //     focusedBorder: UnderlineInputBorder(
+          //       borderSide: BorderSide(
+          //         color: Color.fromARGB(255, 0, 129, 223),
+          //         width: 3.0,
+          //       ),
+          //     ),
+          //   ),
+          //   value: _selectedRoom,
+          //   items: _rooms.map((String room) {
+          //     return DropdownMenuItem<String>(
+          //       value: room,
+          //       child: Text(room),
+          //     );
+          //   }).toList(),
+          //   onChanged: (String? newValue) {
+          //     setState(() {
+          //       _selectedRoom = newValue!;
+          //     });
+          //   },
+          // ),
           SizedBox(height: 20),
           ListTile(
             title: Text(

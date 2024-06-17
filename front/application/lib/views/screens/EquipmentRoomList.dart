@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/EquipamentRoom.dart';
 import 'package:front_end/database/services/RoomService.dart';
-import 'package:front_end/views/screens/EquipamentInfoScreen.dart';
+import 'package:front_end/views/screens/EquipmentInfoScreen.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:front_end/database/models/Room.dart';
+import 'package:front_end/database/models/SetUser.dart';
+import 'package:provider/provider.dart';
 
 class EquipmentRoomList extends StatefulWidget {
   final String roomName;
@@ -18,11 +20,25 @@ class EquipmentRoomList extends StatefulWidget {
 
 class _EquipmentRoomListState extends State<EquipmentRoomList> {
   final TextEditingController _searchController = TextEditingController();
+  final _isAdmin = ValueNotifier<bool>(false);
 
   Future<List<EquipamentRoom>> getEquipaments() async {
     String roomName = widget.roomName;
     List<dynamic> equipaments = await getReadOne(roomName);
     return equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
+  }
+   @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+   void _loadUserData() {
+    var user = Provider.of<SUser>(context, listen: false);
+    setState(() {
+     
+      _isAdmin.value = user.isAdmin;
+    });
   }
 
   @override
@@ -30,7 +46,7 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: false,
-        isAdmin: true,
+        isAdmin: _isAdmin != null ? _isAdmin.value : false,
         hasBackButton: true,
       ),
       body: Container(

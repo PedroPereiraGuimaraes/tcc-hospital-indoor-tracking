@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class User with ChangeNotifier {
+class SUser with ChangeNotifier {
   String _name = '';
   String _email = '';
   String _register = '';

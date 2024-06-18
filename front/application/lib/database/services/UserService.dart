@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 const String URL = 'http://localhost:8000';
 //const String URL = 'http://10.0.2.2:8000';
 
-Future<String> authenticate(String email, String password) async {
+Future<Map<String, dynamic>> authenticate(String email, String password) async {
   final url = Uri.parse('$URL/user/login');
   final headers = {
     'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ Future<String> authenticate(String email, String password) async {
     );
 
     if (response.statusCode == 200) {
-      return 'Success';
+      return jsonDecode(response.body);
     } else {
       final errorMessage =
           jsonDecode(response.body)['message'] ?? 'Unknown error';
@@ -33,10 +33,9 @@ Future<String> authenticate(String email, String password) async {
     throw Exception('An error occurred while authenticating: ${e.toString()}');
   }
 }
-
 Future<String> registerUser(
     String name, String register, String password, String email) async {
-  final url = Uri.parse('http://localhost:8000/user/create');
+  final url = Uri.parse('$URL/user/create');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -67,7 +66,7 @@ Future<String> registerUser(
 }
 
 Future<List> getAllUsers() async {
-  final url = Uri.parse('http://localhost:8000/user/read-all');
+  final url = Uri.parse('$URL/user/read-all');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -91,7 +90,7 @@ Future<List> getAllUsers() async {
 }
 
 Future<String> changeUserAdmin(String register, bool isAdmin) async {
-  final url = Uri.parse('http://localhost:8000/user/change-user-admin');
+  final url = Uri.parse('$URL/user/change-user-admin');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -121,7 +120,7 @@ Future<String> changeUserAdmin(String register, bool isAdmin) async {
 }
 
 Future<String> deleteUser(String register) async {
-  final url = Uri.parse('http://localhost:8000/user/delete');
+  final url = Uri.parse('$URL/user/delete');
   final headers = {
     'Content-Type': 'application/json',
   };
@@ -151,7 +150,7 @@ Future<String> deleteUser(String register) async {
 // atualizar usuário
 Future<String> updateUser(
     String name, String register, String password, String email) async {
-  final url = Uri.parse('http://localhost:8000/user/update');
+  final url = Uri.parse('$URL/user/update');
   final headers = {
     'Content-Type': 'application/json',
   };

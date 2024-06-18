@@ -20,18 +20,14 @@ class HistoricScreen extends StatefulWidget {
 class _HistoricScreenState extends State<HistoricScreen> {
   final TextEditingController _searchController = TextEditingController();
   Map<dynamic, List<dynamic>> equipamentWithHistoricMap = {};
-
+  List<EquipmentWithHistory> historicList = [];
   
   Future<void> getHistoric() async {
-    try {
-      Map<dynamic, List<dynamic>> historicData = await getEquipamentWithHistoric();
-      print('Historic data: $historicData');
+     List<dynamic> historicData = await getEquipamentWithHistoric();
+      historicList = historicData.map((e) => EquipmentWithHistory.fromJson(e)).toList();
       setState(() {
-        equipamentWithHistoricMap = historicData;
+        historicList = historicList;
       });
-    } catch (error) {
-      print('Error fetching historic data: $error');
-    }
   }
 
   @override
@@ -72,11 +68,10 @@ class _HistoricScreenState extends State<HistoricScreen> {
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: equipamentWithHistoricMap.length,
+                itemCount: historicList.length,
                 itemBuilder: (context, index) {
-                  String equipamentName = equipamentWithHistoricMap.keys.elementAt(index);
-                  List<dynamic> historyList = equipamentWithHistoricMap[equipamentName]!;
-                  return CardRoom(equipamentName, historyList);
+                  List<dynamic> historyList_to = historicList[index].historic;
+                  return CardRoom(historicList[index].name, historicList[index].historic);
                 },
               ),
             ),
@@ -117,7 +112,8 @@ class _HistoricScreenState extends State<HistoricScreen> {
     );
   }
 
-  Widget CardRoom(String equipamentName, List<dynamic> historyList) {
+  Widget CardRoom(String equipamentName, List<HistoricEntry> historyList) {
+    print("historyList: {$historyList}");
     return Card(
       child: ExpansionTile(
         title: Text(
@@ -130,10 +126,10 @@ class _HistoricScreenState extends State<HistoricScreen> {
           ),
         ),
         children: historyList.map((history) {
-          print(history['inicial_date']);
+          print(history);
           return ListTile(
             title: Text(
-              "Room: ${history['room']}",
+              "Room: ${history.room}",
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -141,7 +137,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
               ),
             ),
             subtitle: Text(
-              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(history['inicial_date']['\$date']))}",
+              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(history.inicialDate.toString()))}",
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,

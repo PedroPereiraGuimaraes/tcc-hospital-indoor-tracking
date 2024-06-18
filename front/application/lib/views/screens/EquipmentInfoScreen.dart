@@ -48,36 +48,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
     );
   }
 
-  Widget _buildTextField(String hint, TextEditingController controller,
-      IconData icon, bool isPassword) {
-    return TextField(
-      controller: controller,
-      obscureText: isPassword,
-      onChanged: (value) {
-        setState(() {});
-      },
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: TextStyle(
-          color: Colors.grey,
-          fontFamily: GoogleFonts.josefinSans().fontFamily,
-          fontSize: 15,
-        ),
-        suffixIcon: Icon(
-          icon,
-          color: Color.fromARGB(255, 0, 129, 223),
-        ),
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color.fromARGB(255, 0, 129, 223),
-            width: 3.0,
-          ),
-        ),
-      ),
-    );
-  }
+  
 
   Widget CardEquipament(String equipamentName, DateTime lastMaintenance) {
     return Container(
@@ -143,7 +114,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               borderRadius: BorderRadius.zero,
             ),
             child: Text(
-              "24/02/2024",
+              "${lastMaintenance.day}/${lastMaintenance.month}/${lastMaintenance.year}",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -156,7 +127,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Ultima vez visto em: ",
+              "Ultima vez visto: ",
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 129, 223),
                 fontFamily: GoogleFonts.josefinSans().fontFamily,

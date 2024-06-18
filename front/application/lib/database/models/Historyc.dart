@@ -1,46 +1,56 @@
-class Historic {
-  InicialDate? inicialDate;
-  String? room;
-  String? equipamentName;
+class HistoricEntry {
+  DateTime inicialDate;
+  String room;
 
-  Historic({this.inicialDate, this.room, this.equipamentName});
+  HistoricEntry({
+    required this.inicialDate,
+    required this.room,
+  });
 
-  Historic.fromJson(Map<dynamic, dynamic> json) {
-    inicialDate = json['inicial_date'] != null
-        ? new InicialDate.fromJson(json['inicial_date'])
-        : null;
-    room = json['room'];
-    equipamentName = json['equipament_name'];
+  // Método para desserializar JSON em um objeto HistoricEntry
+  factory HistoricEntry.fromJson(Map<String, dynamic> json) {
+    return HistoricEntry(
+      inicialDate: DateTime.parse(json['inicial_date']['\$date'] as String),
+      room: json['room'].toString(),
+    );
   }
 
-  Map<dynamic, dynamic> toJson() {
-    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
-    if (this.inicialDate != null) {
-      data['inicial_date'] = this.inicialDate!.toJson();
-    }
-    data['room'] = this.room;
-    data['equipament_name'] = this.equipamentName;
-    return data;
+  // Método para serializar um objeto HistoricEntry em JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'inicial_date': {
+        '\$date': inicialDate.toIso8601String(),
+      },
+      'room': room,
+    };
   }
 }
 
-class InicialDate {
-  String? date;
+class EquipmentWithHistory {
+  String name;
+  List<HistoricEntry> historic;
 
-  InicialDate({this.date});
+  EquipmentWithHistory({
+    required this.name,
+    required this.historic,
+  });
 
-  factory InicialDate.fromJson(Map<dynamic, dynamic> json) {
-    // Verifica se o JSON contém a chave "$date"
-    if (json.containsKey("\$date")) {
-      return InicialDate(date: json["\$date"]);
-    } else {
-      throw FormatException('Invalid date format');
-    }
+  // Método para desserializar JSON em um objeto EquipmentWithHistory
+  factory EquipmentWithHistory.fromJson(Map<String, dynamic> json) {
+    var historicList = json['historic'] as List<dynamic>;
+    List<HistoricEntry> historicEntries = historicList.map((entry) => HistoricEntry.fromJson(entry)).toList();
+
+    return EquipmentWithHistory(
+      name: json['name'] as String,
+      historic: historicEntries,
+    );
   }
 
-  Map<dynamic, dynamic> toJson() {
-    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
-    data['\$date'] = this.date;
-    return data;
+  // Método para serializar um objeto EquipmentWithHistory em JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'historic': historic.map((entry) => entry.toJson()).toList(),
+    };
   }
 }

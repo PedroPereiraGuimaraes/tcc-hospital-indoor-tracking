@@ -7,6 +7,8 @@ import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:front_end/database/models/Room.dart';
 import 'package:front_end/database/services/RoomService.dart';
+import 'package:front_end/database/models/SetUser.dart';
+import 'package:provider/provider.dart';
 
 class RoomsScreen extends StatefulWidget {
   const RoomsScreen({Key? key}) : super(key: key);
@@ -17,11 +19,13 @@ class RoomsScreen extends StatefulWidget {
 
 class _RoomsScreenState extends State<RoomsScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final _isAdmin = ValueNotifier<bool>(false);
   List<Room> roomsList = [];
 
   Future<void> getRooms() async {
     List<dynamic> rooms = await getReadAll();
     roomsList = rooms.map((e) => Room.fromJson(e)).toList();
+   
     setState(() {
       roomsList = roomsList;
     });
@@ -31,6 +35,15 @@ class _RoomsScreenState extends State<RoomsScreen> {
   void initState() {
     super.initState();
     getRooms();
+    _loadUserData();
+  }
+
+   void _loadUserData() {
+    var user = Provider.of<SUser>(context, listen: false);
+    setState(() {
+     
+      _isAdmin.value = user.isAdmin;
+    });
   }
 
   @override
@@ -38,7 +51,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: true,
-        isAdmin: false,
+        isAdmin: _isAdmin != null ? _isAdmin.value : false,
         hasBackButton: false,
       ),
       body: Container(

@@ -28,6 +28,7 @@ class AddRoomListState extends State<AddRoomList> {
       return;
     } else {
       createRoom(name).then((result) {
+        print('Result:>>>> $result');
         if (result == 'Success') {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -41,7 +42,14 @@ class AddRoomListState extends State<AddRoomList> {
               builder: (context) => RoomsScreen(),
             ),
           );
-        } else {
+        } else if (result == 'Conflict') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('A sala já existe'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Erro ao adicionar sala'),
@@ -58,10 +66,8 @@ class AddRoomListState extends State<AddRoomList> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: true,
-        isAdmin: true,
-        hasBackButton: true,
-        // Adiciona um ícone à app bar
-        
+        isAdmin: false,
+        hasBackButton: true, 
       ),
       body: Container(
         width: double.infinity,

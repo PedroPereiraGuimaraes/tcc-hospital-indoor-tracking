@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..',
 # print(f"\n{sys.path}")
 import pandas as pd
 from src.database.repository.equipment import EquipmentDAO
+from src.database.repository.room import RoomDAO
 
 
 def validating_input(macList, rowValues):
@@ -32,13 +33,17 @@ def verify_equipment_room_on_database(new_current_room, esp_id):
     try:
         # Get current room saved in the database
         equipmentDAO = EquipmentDAO()
-        equipment_room_date = equipmentDAO.get_current_room_and_date(esp_id)
+        equipment = equipmentDAO.get_current_room_and_date(esp_id)
+
+        roomDAO = RoomDAO()
+
 
         # If the room is different, change data in the database
-        if str(new_current_room) != str(equipment_room_date['current_room']):
+        if str(new_current_room) != str(equipment['current_room']):
             print(f"current room: {new_current_room}")
-            equipmentDAO.update_historic(esp_id, equipment_room_date['current_room'], equipment_room_date['current_date'])
+            equipmentDAO.update_historic(esp_id, equipment['current_room'], equipment['current_date'])
             equipmentDAO.update_current_room(esp_id, str(new_current_room))
+            roomDAO.update_equipment_in_room(str(new_current_room), equipment['name'], equipment['patrimonio'])
         else:
             print("It didn't move")
     except Exception as e:

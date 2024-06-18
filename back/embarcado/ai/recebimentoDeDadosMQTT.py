@@ -1,11 +1,13 @@
 import paho.mqtt.client as mqtt
 import pandas as pd
+from main_ai import check_room, validating_input
 
-mqtt_server = "192.168.168.206"
+mqtt_server = "192.168.70.206"
 MacList = []
 RowsZeros = []
 df = pd.DataFrame()
 counter = 0
+final_df = pd.DataFrame()
 
 class ClassConnect:
     def __init__(self):
@@ -40,23 +42,51 @@ class ClassConnect:
         return False
 
     def update_rows(self, payload):
-        global df, RowsZeros  # Referenciar as variáveis globais
+        global df, RowsZeros, dispName, final_df, test  # Referenciar as variáveis globais
         if payload != 'START' and payload != 'FIM' and len(RowsZeros) > 0 and len(MacList) > 0:
             dispName, ssid, mac, speed = payload.split(',')
+            print(payload)
+            print(dispName)
             if ssid == 'WLL-Inatel' and mac in MacList:
                 RowsZeros[MacList.index(mac)] = int(speed)
         elif payload == 'FIM':
             # Adicionar RowsZeros como uma nova linha no DataFrame
-            df.loc[len(df)] = RowsZeros
 
-            check_room(MacList, RowsZeros, dispName)
+            # df.loc[len(df)] = RowsZeros
 
-            # Reinicializar RowsZeros com zeros para todas as colunas
-            RowsZeros = [0] * len(MacList)
-            # Salvar o DataFrame em um arquivo CSV sempre com o mesmo nome
-            df.to_csv("dataframe.csv", index=False)
+            # Chamando a função para obter df_aux
+            df_aux = validating_input(MacList, RowsZeros)
+            linha = df_aux.iloc[0].tolist()
+            print(linha)
+
+            # # Convertendo a lista de volta para um DataFrame de uma única linha
+            # linha_df = pd.DataFrame([linha], columns=df_aux.columns)
+
+            # # # Adicionando a linha ao final_df
+            # # final_df = pd.DataFrame()
+            # test = final_df.join(linha_df)
+
+            try: 
+                final_df.loc[len(final_df) + 1] = linha
+            except Exception as e:
+                final_df.loc[0] = linha
+                
+
+
+
+            # # check_room(MacList, RowsZeros, dispName)
+            # df_aux = validating_input(MacList, RowsZeros)
+            # final_df = pd.DataFrame({})
+
+            # print(df_aux.iloc[0].tolist())
+            # final_df = final_df.append(df_aux.iloc[0].tolist(),  ignore_index=True)
+
+            # # Reinicializar RowsZeros com zeros para todas as colunas
+            # RowsZeros = [0] * len(MacList)
+            # # Salvar o DataFrame em um arquivo CSV sempre com o mesmo nome
+            test.to_csv("dataframe.csv", index=False)
             print("DataFrame salvo como dataframe.csv")
-            print(df)
+            print(final_df)
 
     def start(self):
         self.client.connect(mqtt_server, 1883, 60)  # Conecte-se ao broker MQTT

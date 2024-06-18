@@ -1,4 +1,5 @@
 from src.database.connection_db import Database
+from datetime import datetime
 import json
 from bson import json_util 
 from datetime import datetime
@@ -53,7 +54,7 @@ class EquipmentDAO: # DAO - Data Access Object
         
     def update(self, data_equipment):
         try:
-            res = self.db.collection.update_one({"patrimonio": data_equipment.patrimonio}, {"$set":  {"name": data_equipment.name}})
+            res = self.db.collection.update_one({"patrimonio": data_equipment.patrimonio}, {"$set":  {"name": data_equipment.name, "last_maintenance": data_equipment.last_maintenance, "next_maintenance": data_equipment.next_maintenance}})
 
             if res.matched_count == 0:
                 return False
@@ -77,7 +78,7 @@ class EquipmentDAO: # DAO - Data Access Object
         
     def get_history(self):
         try:
-            res = self.db.collection.find({}, {"_id": 0, "name": 1,"historic": 1})
+            res = self.db.collection.find({}, {"_id": 0, "name": 1,"patrimonio": 1, "historic": 1})
 
             parsed_json = json.loads(json_util.dumps(res))
             print("res historico:", parsed_json)
@@ -102,7 +103,7 @@ class EquipmentDAO: # DAO - Data Access Object
 
     def get_current_room_and_date(self, esp_id):
         try:
-            res = self.db.collection.find_one({"esp_id": esp_id},  {"current_room": 1, "current_date": 1})
+            res = self.db.collection.find_one({"esp_id": esp_id},  {"_id": 0, "name": 1, "patrimonio": 1,  "current_room": 1, "current_date": 1})
             # print("one equipment: ", res['current_room'])
 
             return res

@@ -56,3 +56,16 @@ class RoomDAO: # DAO - Data Access Object
         except Exception as e:
             print(f"Houve um erro ao tentar apagar a sala:  {e}")
             return None
+    
+    def update_equipment_in_room(self, name_room, name_equipment, patrimonio):
+        try:
+            new_data = {
+                "equipment": name_equipment,
+                "patrimonio": patrimonio,
+            }
+            res = self.db.collection.update_one({"name": name_room}, {"$push": {"equipments": new_data}})
+            print("one equipment: ", res)
+
+            return res
+        except Exception as e:
+            raise e

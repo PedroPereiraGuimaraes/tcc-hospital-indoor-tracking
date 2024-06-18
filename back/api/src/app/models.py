@@ -1,13 +1,15 @@
 from pydantic import BaseModel
-
+from datetime import datetime
 class Equipment(BaseModel):
     name: str
     patrimonio: str
     # historic: dict
 
-class Equipment_maintenance(BaseModel):
+class Equipment_update(BaseModel):
     patrimonio: str
-    maintenance: bool
+    name: str
+    last_maintenance: datetime
+    next_maintenance: datetime
 
 class User(BaseModel):
     name: str

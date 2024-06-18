@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 from src.database.repository.equipment import EquipmentDAO
-from src.app.models import Equipment, Equipment_maintenance
+from src.app.models import Equipment, Equipment_update
 
 router = APIRouter()
 
@@ -49,7 +49,7 @@ def read_equipments_by_current_room(current_room: str):
     return equipment
 
 @router.put("/update", status_code=status.HTTP_200_OK)
-def update_equipment(update_data: Equipment):
+def update_equipment(update_data: Equipment_update):
     equipmentDAO = EquipmentDAO()
     update_status = equipmentDAO.update(update_data)
 
@@ -84,14 +84,14 @@ def history_equipment():
 
     return status
 
-@router.put("/update-maintenance", status_code=status.HTTP_200_OK)
-def update_maintenante_equipment(update_data: Equipment_maintenance):
-    equipmentDAO = EquipmentDAO()
-    update_status = equipmentDAO.update_maintenance(update_data)
+# @router.put("/update-maintenance", status_code=status.HTTP_200_OK)
+# def update_maintenante_equipment(update_data: Equipment_maintenance):
+#     equipmentDAO = EquipmentDAO()
+#     update_status = equipmentDAO.update_maintenance(update_data)
 
-    if update_status == False:
-        raise HTTPException(status_code=404, detail="No equipment found")
-    elif update_status == None:
-        raise HTTPException(status_code=500)
+#     if update_status == False:
+#         raise HTTPException(status_code=404, detail="No equipment found")
+#     elif update_status == None:
+#         raise HTTPException(status_code=500)
 
-    return update_status
+#     return update_status

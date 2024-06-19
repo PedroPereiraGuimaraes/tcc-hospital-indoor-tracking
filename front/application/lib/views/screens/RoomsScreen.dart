@@ -139,7 +139,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
       elevation: 2,
       child: ListTile(
         title: Text(
-          name.toUpperCase(),
+          "Sala $name",
           style: TextStyle(
             color: Color.fromARGB(255, 0, 129, 223),
             fontFamily: GoogleFonts.josefinSans().fontFamily,

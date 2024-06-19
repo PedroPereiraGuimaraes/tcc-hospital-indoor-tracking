@@ -119,82 +119,96 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
 
 
   Widget CardRoom(String name, String room, String patrimonio) {
-  TextEditingController _editController = TextEditingController(text: name);
-  
-  return Card(
-    color: Colors.white,
-    shadowColor: Colors.blue,
-    elevation: 2,
-    child: ListTile(
-      title: GestureDetector(
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Editar Nome do Equipamento'),
-                content: TextField(
-                  controller: _editController,
-                  decoration: InputDecoration(hintText: "Novo Nome"),
+    TextEditingController _editController = TextEditingController(text: name);
+    
+    return Card(
+      color: Colors.white,
+      shadowColor: Colors.blue,
+      elevation: 2,
+      child: ListTile(
+        title: GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Editar Nome do Equipamento'),
+                  content: TextField(
+                    controller: _editController,
+                    decoration: InputDecoration(hintText: "Novo Nome"),
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text('Cancelar'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Salvar'),
+                      onPressed: () {
+                        setState(() {
+                          // Atualizar o nome do equipamento
+                          name = _editController.text;
+                        });
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "$name",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 0, 129, 223),
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                 ),
-                actions: [
-                  TextButton(
-                    child: Text('Cancelar'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                
+              ),
+              Text(
+                  "Patrimônio: $patrimonio",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    fontSize: 15,
                   ),
-                  TextButton(
-                    child: Text('Salvar'),
-                    onPressed: () {
-                      setState(() {
-                        // Atualizar o nome do equipamento
-                        name = _editController.text;
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            },
+                ),
+              Text(
+                "Sala $room",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 15,
+                ),
+              ),
+            ],
+          ),
+        ),
+        trailing: Icon(
+          Icons.arrow_forward_ios,
+          color: Color.fromARGB(255, 0, 129, 223),
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EquipamentScreen(
+                equipamentName: name,
+                roomName: room,
+                patrimonio: patrimonio,
+              ),
+            ),
           );
         },
-        child: Text(
-          name,
-          style: TextStyle(
-            color: Color.fromARGB(255, 0, 129, 223),
-            fontFamily: GoogleFonts.josefinSans().fontFamily,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
       ),
-      subtitle: Text(
-        "Última vez visto: Sala $room",
-        style: TextStyle(
-          color: Colors.black,
-          fontFamily: GoogleFonts.josefinSans().fontFamily,
-          fontSize: 15,
-        ),
-      ),
-      trailing: Icon(
-        Icons.arrow_forward_ios,
-        color: Color.fromARGB(255, 0, 129, 223),
-      ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EquipamentScreen(
-              equipamentName: name,
-              roomName: room,
-              patrimonio: patrimonio,
-            ),
-          ),
-        );
-      },
-    ),
-  );
-}
+    );
+  }
 
 }

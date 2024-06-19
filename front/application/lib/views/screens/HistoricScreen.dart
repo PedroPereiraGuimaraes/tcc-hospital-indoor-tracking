@@ -113,40 +113,59 @@ class _HistoricScreenState extends State<HistoricScreen> {
   }
 
   Widget CardRoom(String equipamentName, List<HistoricEntry> historyList) {
-    print("historyList: {$historyList}");
-    return Card(
-      child: ExpansionTile(
-        title: Text(
-          equipamentName.toUpperCase(),
-          style: TextStyle(
-            color: Color.fromARGB(255, 0, 129, 223),
-            fontFamily: GoogleFonts.josefinSans().fontFamily,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
+  print("historyList: $historyList");
+  return Card(
+    child: ExpansionTile(
+      title: Text(
+        equipamentName.toUpperCase(),
+        style: TextStyle(
+          color: Color.fromARGB(255, 0, 129, 223),
+          fontFamily: GoogleFonts.josefinSans().fontFamily,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
         ),
-        children: historyList.map((history) {
-          print(history);
-          return ListTile(
-            title: Text(
-              "Room: ${history.room}",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 15,
-              ),
-            ),
-            subtitle: Text(
-              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(history.inicialDate.toString()))}",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 15,
-              ),
-            ),
-          );
-        }).toList(),
       ),
-    );
-  }
+      subtitle: Text(
+        "Patrimônio: ${Random().nextInt(1000)}",
+        style: TextStyle(
+          color: Colors.grey,
+          fontFamily: GoogleFonts.josefinSans().fontFamily,
+          fontSize: 15,
+        ),
+      ),
+      children: historyList.asMap().entries.map((entry) {
+        int index = entry.key;
+        HistoricEntry history = entry.value;
+
+        return Column(
+          children: [
+            ListTile(
+              title: Text(
+                "Sala ${history.room}",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 15,
+                ),
+              ),
+              subtitle: Text(
+                "${DateFormat('dd/MM/yyyy (HH:mm)').format(DateTime.parse(history.inicialDate.toString()))}",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            if (index < historyList.length - 1)
+              Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+          ],
+        );
+      }).toList(),
+    ),
+  );
+}
 }

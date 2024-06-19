@@ -42,4 +42,5 @@ def get_current_room_with_model(data):
     print(f"resultado final: {predictions[0]}")
     return predictions[0]
 
+
 # train_models()

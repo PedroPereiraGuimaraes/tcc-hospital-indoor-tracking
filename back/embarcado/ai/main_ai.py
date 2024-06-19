@@ -2,6 +2,8 @@ import sys
 import os
 from model_ai import get_current_room_with_model
 import time
+import pandas as pd
+
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'api')))
 
@@ -58,6 +60,26 @@ def check_room(keys, values, esp_id):
     model_response = get_current_room_with_model(input_model)
     verify_equipment_room_on_database(model_response, esp_id)
 
+def get_data_for_training(MacList, RowsZeros):
+    arquivo_csv = 'dataframe.csv'
+    df = pd.read_csv(arquivo_csv)
+
+    # Chamando a função para obter df_aux
+    df_new_line = validating_input(MacList, RowsZeros)
+    
+    df = pd.concat([df, df_new_line], ignore_index=True)
+    df.to_csv("dataframe.csv", index=False)
+    print("DataFrame salvo como dataframe.csv")
+
+def create_all_rooms():
+    roomDAO = RoomDAO()
+
+    arquivo_csv = 'back/trainingData/joinData/train_dataset.csv'
+    df = pd.read_csv(arquivo_csv, usecols=['Sala'])
+    print(df['Sala'].unique())
+    rooms = df['Sala'].unique()
+    for room in rooms:
+        roomDAO.create(str(room))
 
 # Test
 # keys = ['90:3A:72:25:03:C8','30:87:D9:02:FA:C8','B4:79:C8:05:B9:A8','B4:79:C8:45:BA:58']

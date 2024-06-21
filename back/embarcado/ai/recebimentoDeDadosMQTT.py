@@ -1,11 +1,13 @@
 import paho.mqtt.client as mqtt
 import pandas as pd
+from main_ai import check_room, get_data_for_training
 
-mqtt_server = "192.168.179.86"
+mqtt_server = "192.168.70.206"
 MacList = []
 RowsZeros = []
 df = pd.DataFrame()
 counter = 0
+final_df = pd.DataFrame()
 
 class ClassConnect:
     def __init__(self):
@@ -40,20 +42,19 @@ class ClassConnect:
         return False
 
     def update_rows(self, payload):
-        global df, RowsZeros  # Referenciar as variáveis globais
+        global df, RowsZeros, dispName  # Referenciar as variáveis globais
         if payload != 'START' and payload != 'FIM' and len(RowsZeros) > 0 and len(MacList) > 0:
             dispName, ssid, mac, speed = payload.split(',')
             if ssid == 'WLL-Inatel' and mac in MacList:
                 RowsZeros[MacList.index(mac)] = int(speed)
         elif payload == 'FIM':
-            # Adicionar RowsZeros como uma nova linha no DataFrame
-            df.loc[len(df)] = RowsZeros
-            # Reinicializar RowsZeros com zeros para todas as colunas
-            RowsZeros = [0] * len(MacList)
-            # Salvar o DataFrame em um arquivo CSV sempre com o mesmo nome
-            df.to_csv("dataframe.csv", index=False)
-            print("DataFrame salvo como dataframe.csv")
-            print(df)
+            
+            # Check which room the esp is in through the macs and update the data if necessary
+            # check_room(MacList, RowsZeros, dispName)
+
+            # If you are collecting data for training, use this function and comment on the one above
+            get_data_for_training(MacList, RowsZeros)
+            
 
     def start(self):
         self.client.connect(mqtt_server, 1883, 60)  # Conecte-se ao broker MQTT

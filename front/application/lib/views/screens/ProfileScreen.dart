@@ -1,11 +1,9 @@
-// criar pagina do usuarios, com informações de perfil, e opções de editar perfil, e logout
-
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:front_end/database/services/UserService.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
+import 'package:front_end/database/models/SetUser.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -21,6 +19,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _registerController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() {
+    var user = Provider.of<SUser>(context, listen: false);
+    setState(() {
+      _nameController.text = user.name;
+      _emailController.text = user.email;
+      _registerController.text = user.register;
+    });
+  }
 
   void _updateUser() {
     String name = _nameController.text;
@@ -144,6 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
@@ -160,6 +174,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             alignment: Alignment.center,
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
+                    radius: 50,
+                    child: Icon(
+                      Icons.person,
+                      size: 50,
+                      color: Colors.white,
+                    ),
+                    backgroundColor: Colors.blue,
+                  ),
+                ),
+                SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(

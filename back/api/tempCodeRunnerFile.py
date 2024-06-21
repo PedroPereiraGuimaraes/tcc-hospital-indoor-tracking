@@ -1,1 +1,0 @@
-pd.read_csv(r'C:\Users\mable\Documents\tcc-hospital-indoor-tracking\back\trainingData\roomData\TabelaTratadaV2.csv')

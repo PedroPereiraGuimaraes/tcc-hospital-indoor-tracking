@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:front_end/database/models/Equipament.dart';
 import 'package:front_end/database/models/Historyc.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
@@ -18,17 +19,15 @@ class HistoricScreen extends StatefulWidget {
 
 class _HistoricScreenState extends State<HistoricScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<Historic> historicList = [];
-
+  Map<dynamic, List<dynamic>> equipamentWithHistoricMap = {};
+  List<EquipmentWithHistory> historicList = [];
+  
   Future<void> getHistoric() async {
-    try {
-      List<dynamic> historicData = await getEquipamentWithHistoric();
+     List<dynamic> historicData = await getEquipamentWithHistoric();
+      historicList = historicData.map((e) => EquipmentWithHistory.fromJson(e)).toList();
       setState(() {
-        historicList = historicData.map((e) => Historic.fromJson(e)).toList();
+        historicList = historicList;
       });
-    } catch (error) {
-      print('Error fetching historic data: $error');
-    }
   }
 
   @override
@@ -67,17 +66,12 @@ class _HistoricScreenState extends State<HistoricScreen> {
               ),
             ),
             SizedBox(height: 20),
-            // COLOCAR NA MESMA LINHA
             Expanded(
               child: ListView.builder(
                 itemCount: historicList.length,
                 itemBuilder: (context, index) {
-                  final historic = historicList[index];
-                  return CardRoom(
-                    historicList[index].equipamentName!,
-                    historicList[index].room!,
-                    '2022-01-01',
-                  );
+                  List<dynamic> historyList_to = historicList[index].historic;
+                  return CardRoom(historicList[index].name, historicList[index].historic);
                 },
               ),
             ),
@@ -88,8 +82,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
     );
   }
 
-  Widget _buildTextField(String hint, TextEditingController controller,
-      IconData icon, bool isPassword) {
+  Widget _buildTextField(String hint, TextEditingController controller, IconData icon, bool isPassword) {
     return TextField(
       controller: controller,
       obscureText: isPassword,
@@ -119,39 +112,60 @@ class _HistoricScreenState extends State<HistoricScreen> {
     );
   }
 
-  Widget CardRoom(String equipamentName, String room, String inicialDate) {
-    return Card(
-      child: ExpansionTile(
-        title: Text(
-          equipamentName.toUpperCase(),
-          style: TextStyle(
-            color: Color.fromARGB(255, 0, 129, 223),
-            fontFamily: GoogleFonts.josefinSans().fontFamily,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
+  Widget CardRoom(String equipamentName, List<HistoricEntry> historyList) {
+  print("historyList: $historyList");
+  return Card(
+    child: ExpansionTile(
+      title: Text(
+        equipamentName.toUpperCase(),
+        style: TextStyle(
+          color: Color.fromARGB(255, 0, 129, 223),
+          fontFamily: GoogleFonts.josefinSans().fontFamily,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
         ),
-        children: [
-          ListTile(
-            title: Text(
-              "Room: $room",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 15,
-              ),
-            ),
-            subtitle: Text(
-              "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.parse(inicialDate))}",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: GoogleFonts.josefinSans().fontFamily,
-                fontSize: 15,
-              ),
-            ),
-          ),
-        ],
       ),
-    );
-  }
+      subtitle: Text(
+        "Patrimônio: ${Random().nextInt(1000)}",
+        style: TextStyle(
+          color: Colors.grey,
+          fontFamily: GoogleFonts.josefinSans().fontFamily,
+          fontSize: 15,
+        ),
+      ),
+      children: historyList.asMap().entries.map((entry) {
+        int index = entry.key;
+        HistoricEntry history = entry.value;
+
+        return Column(
+          children: [
+            ListTile(
+              title: Text(
+                "Sala ${history.room}",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 15,
+                ),
+              ),
+              subtitle: Text(
+                "${DateFormat('dd/MM/yyyy (HH:mm)').format(DateTime.parse(history.inicialDate.toString()))}",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: GoogleFonts.josefinSans().fontFamily,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            if (index < historyList.length - 1)
+              Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
+          ],
+        );
+      }).toList(),
+    ),
+  );
+}
 }

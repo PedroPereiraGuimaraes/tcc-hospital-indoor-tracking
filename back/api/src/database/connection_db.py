@@ -7,7 +7,10 @@ load_dotenv()
 
 #classe Database, que fará a conexão com o MongoDB 
 class Database:
-    def __init__(self, database, collection):
+    def __init__(self, collection):
+        database = 'indoor_db'
+        if os.getenv('ENV_QA') == "True":
+            database = 'indoor_db_QA'
         self.connect(database, collection) 
 
     def connect(self, database, collection):

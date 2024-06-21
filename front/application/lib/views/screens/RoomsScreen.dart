@@ -7,6 +7,8 @@ import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:front_end/database/models/Room.dart';
 import 'package:front_end/database/services/RoomService.dart';
+import 'package:front_end/database/models/SetUser.dart';
+import 'package:provider/provider.dart';
 
 class RoomsScreen extends StatefulWidget {
   const RoomsScreen({Key? key}) : super(key: key);
@@ -17,11 +19,13 @@ class RoomsScreen extends StatefulWidget {
 
 class _RoomsScreenState extends State<RoomsScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final _isAdmin = ValueNotifier<bool>(false);
   List<Room> roomsList = [];
 
   Future<void> getRooms() async {
     List<dynamic> rooms = await getReadAll();
     roomsList = rooms.map((e) => Room.fromJson(e)).toList();
+   
     setState(() {
       roomsList = roomsList;
     });
@@ -31,6 +35,15 @@ class _RoomsScreenState extends State<RoomsScreen> {
   void initState() {
     super.initState();
     getRooms();
+    _loadUserData();
+  }
+
+   void _loadUserData() {
+    var user = Provider.of<SUser>(context, listen: false);
+    setState(() {
+     
+      _isAdmin.value = user.isAdmin;
+    });
   }
 
   @override
@@ -38,7 +51,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         isRoom: true,
-        isAdmin: true,
+        isAdmin: _isAdmin != null ? _isAdmin.value : false,
         hasBackButton: false,
       ),
       body: Container(
@@ -72,9 +85,9 @@ class _RoomsScreenState extends State<RoomsScreen> {
                 itemCount: roomsList.length,
                 itemBuilder: (context, index) {
                   final roomName = roomsList[index].name!.toLowerCase();
-                  final qEquipments = roomsList[index].equipments?.length ??
-                      0; // Usando operador de coalescência nula para fornecer um valor padrão
+                  final qEquipments = roomsList[index].equipments?.length ?? 0; 
                   final searchQuery = _searchController.text.toLowerCase();
+                  
                   return roomName.contains(searchQuery)
                       ? CardRoom(roomName.toUpperCase(), qEquipments)
                       : SizedBox.shrink();
@@ -126,7 +139,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
       elevation: 2,
       child: ListTile(
         title: Text(
-          name.toUpperCase(),
+          "Sala $name",
           style: TextStyle(
             color: Color.fromARGB(255, 0, 129, 223),
             fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -135,7 +148,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
           ),
         ),
         subtitle: Text(
-          "Equipamentos:$equipments",
+          "Equipamentos: $equipments",
           style: TextStyle(
             color: Colors.black,
             fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -147,14 +160,34 @@ class _RoomsScreenState extends State<RoomsScreen> {
           color: Color.fromARGB(255, 0, 129, 223),
         ),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EquipmentRoomList(
-                roomName: name,
+          if (equipments == 0) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Informação'),
+                  content: Text('A lista está vazia'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EquipmentRoomList(
+                  roomName: name,
+                ),
               ),
-            ),
-          );
+            );
+          }
         },
       ),
     );

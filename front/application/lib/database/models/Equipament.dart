@@ -1,13 +1,11 @@
 class Equipament {
-  String id;
   String name;
   String patrimonio;
   bool maintenance;
   String currentRoom;
-  String currentDate;
+  DateTime currentDate;
 
   Equipament({
-    required this.id,
     required this.name,
     required this.patrimonio,
     required this.maintenance,
@@ -15,25 +13,27 @@ class Equipament {
     required this.currentDate,
   });
 
+  // Método para desserializar JSON em um objeto Equipment
   factory Equipament.fromJson(Map<String, dynamic> json) {
     return Equipament(
-      id: json['_id']['\$oid'],
-      name: json['name'],
-      patrimonio: json['patrimonio'],
-      maintenance: json['maintenance'],
-      currentRoom: json['current_room'],
-      currentDate: json['current_date']['\$date'],
+      name: json['name'] as String,
+      patrimonio: json['patrimonio'].toString(),
+      maintenance: json['maintenance'] as bool,
+      currentRoom: json['current_room'].toString(),
+      currentDate: DateTime.parse(json['current_date']['\$date'] as String),
     );
   }
 
+  // Método para serializar um objeto Equipment em JSON
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = {'\$oid': id};
-    data['name'] = name;
-    data['patrimonio'] = patrimonio;
-    data['maintenance'] = maintenance;
-    data['current_room'] = currentRoom;
-    data['current_date'] = {'\$date': currentDate};
-    return data;
+    return {
+      'name': name,
+      'patrimonio': patrimonio,
+      'maintenance': maintenance,
+      'current_room': currentRoom,
+      'current_date': {
+        '\$date': currentDate.toIso8601String(),
+      },
+    };
   }
 }

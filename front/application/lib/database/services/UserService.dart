@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-//const String URL = 'http://localhost:8000';
-const String URL = 'http://10.0.2.2:8000';
+const String URL = 'http://localhost:8000';
+//const String URL = 'http://10.0.2.2:8000';
 
-Future<String> authenticate(String email, String password) async {
+Future<Map<String, dynamic>> authenticate(String email, String password) async {
   final url = Uri.parse('$URL/user/login');
   final headers = {
     'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ Future<String> authenticate(String email, String password) async {
     );
 
     if (response.statusCode == 200) {
-      return 'Success';
+      return jsonDecode(response.body);
     } else {
       final errorMessage =
           jsonDecode(response.body)['message'] ?? 'Unknown error';
@@ -33,7 +33,6 @@ Future<String> authenticate(String email, String password) async {
     throw Exception('An error occurred while authenticating: ${e.toString()}');
   }
 }
-
 Future<String> registerUser(
     String name, String register, String password, String email) async {
   final url = Uri.parse('$URL/user/create');
@@ -62,8 +61,7 @@ Future<String> registerUser(
       throw Exception('Failed to register user: $errorMessage');
     }
   } catch (e) {
-    throw Exception(
-        'An error occurred while registering user: ${e.toString()}');
+    throw Exception('An error occurred while registering user: ${e.toString()}');
   }
 }
 
@@ -87,8 +85,7 @@ Future<List> getAllUsers() async {
       throw Exception('Failed to get all users: $errorMessage');
     }
   } catch (e) {
-    throw Exception(
-        'An error occurred while getting all users: ${e.toString()}');
+    throw Exception('An error occurred while getting all users: ${e.toString()}');
   }
 }
 
@@ -118,8 +115,7 @@ Future<String> changeUserAdmin(String register, bool isAdmin) async {
       throw Exception('Failed to change user admin: $errorMessage');
     }
   } catch (e) {
-    throw Exception(
-        'An error occurred while changing user admin: ${e.toString()}');
+    throw Exception('An error occurred while changing user admin: ${e.toString()}');
   }
 }
 

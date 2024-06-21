@@ -102,6 +102,6 @@ void loop() {
   }
   client.publish("routerinfo", "FIM", true);
   Serial.println("Fim");
-  delay(500);
+  delay(300000); // 5 minutos
 }
 

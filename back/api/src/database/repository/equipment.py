@@ -1,14 +1,16 @@
-from database.connection_db import Database
+from src.database.connection_db import Database
+from datetime import datetime
 import json
 from bson import json_util 
+from datetime import datetime
 
 class EquipmentDAO: # DAO - Data Access Object
     def __init__(self):
-        self.db = Database(database="indoor_db", collection="equipment")
+        self.db = Database(collection="equipment")
 
     def get_all(self):
         try:
-            res = self.db.collection.find()
+            res = self.db.collection.find({}, {"_id": 0, "name": 1,"patrimonio": 1, "maintenance": 1, "current_room": 1, "current_date": 1})
 
             parsed_json = json.loads(json_util.dumps(res))
             return parsed_json
@@ -21,15 +23,13 @@ class EquipmentDAO: # DAO - Data Access Object
         try:
             user_json = {"name": new_equipment.name,
                          "patrimonio": new_equipment.patrimonio,
-                         "maintenance": new_equipment.maintenance,
-                         "current_room": new_equipment.current_room,
-                         "current_date": new_equipment.current_date}
+                         "maintenance": False}
             res = self.db.collection.insert_one(user_json)
             
             return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
 
     def read_one(self, patrimonio):
         try:
@@ -54,7 +54,7 @@ class EquipmentDAO: # DAO - Data Access Object
         
     def update(self, data_equipment):
         try:
-            res = self.db.collection.update_one({"patrimonio": data_equipment.patrimonio}, {"$set":  {"name": data_equipment.name}})
+            res = self.db.collection.update_one({"patrimonio": data_equipment.patrimonio}, {"$set":  {"name": data_equipment.name, "last_maintenance": data_equipment.last_maintenance, "next_maintenance": data_equipment.next_maintenance}})
 
             if res.matched_count == 0:
                 return False
@@ -62,7 +62,7 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
         
     def delete(self, patrimonio):
         try:
@@ -74,11 +74,11 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar pegar os equipamentos: {e}")
-            return False
+            return None
         
-    def get_history(self, patrimonio):
+    def get_history(self):
         try:
-            res = self.db.collection.find({"patrimonio": patrimonio}, {"historic": 1})
+            res = self.db.collection.find({}, {"_id": 0, "name": 1,"patrimonio": 1, "historic": 1})
 
             parsed_json = json.loads(json_util.dumps(res))
             print("res historico:", parsed_json)
@@ -99,4 +99,37 @@ class EquipmentDAO: # DAO - Data Access Object
                 return True
         except Exception as e:
             print(f"Houve um erro ao tentar atualizar o manutenção: {e}")
-            return False
+            return None
+
+    def get_current_room_and_date(self, esp_id):
+        try:
+            res = self.db.collection.find_one({"esp_id": esp_id},  {"_id": 0, "name": 1, "patrimonio": 1,  "current_room": 1, "current_date": 1})
+            # print("one equipment: ", res['current_room'])
+
+            return res
+        except Exception as e:
+            raise e
+        
+    def update_historic(self, esp_id, room, date):
+        try:
+            new_data = {
+                "room": room,
+                "inicial_date": date,
+            }
+            res = self.db.collection.update_one({"esp_id": esp_id}, {"$push": {"historic": new_data}})
+            print("one equipment: ", res)
+
+            return res
+        except Exception as e:
+            raise e
+    
+    def update_current_room(self, esp_id, room):
+        try:
+            date = datetime.now()
+            
+            res = self.db.collection.update_one({"esp_id": esp_id},{"$set": {"current_room": room, "current_date": date}})
+            print("one equipment type: ", type(res))
+
+            return res
+        except Exception as e:
+            raise e

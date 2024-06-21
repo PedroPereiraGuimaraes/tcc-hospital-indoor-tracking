@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:front_end/views/screens/InsertNewEquipament.dart';
+import 'package:front_end/views/screens/InsertNewEquipment.dart';
 import 'package:front_end/views/screens/InsertNewRoom.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool isAdmin;
@@ -28,18 +29,37 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ? IconButton(
               icon: Icon(Icons.arrow_back),
               color: Colors.white,
-              iconSize: 20,
+              iconSize: 15,
               onPressed: () {
                 Navigator.pop(context);
               },
             )
           : null,
+      title: Row(
+        children: [
+          Icon(
+            Icons.device_hub,
+            color: Colors.white,
+            size: 25,
+          ),
+          SizedBox(width: 10),
+          Text(
+            "Localizador de dispositivos",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: GoogleFonts.josefinSans().fontFamily,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
       actions: widget.isAdmin
           ? [
               IconButton(
                 icon: Icon(Icons.add),
                 color: Colors.white,
-                iconSize: 28,
+                iconSize: 23,
                 onPressed: () {
                   if (widget.isRoom) {
                     Navigator.push(
@@ -49,12 +69,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       ),
                     );
                   } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddEquipamentList(),
-                    ),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddEquipamentList(),
+                      ),
+                    );
                   }
                 },
               ),

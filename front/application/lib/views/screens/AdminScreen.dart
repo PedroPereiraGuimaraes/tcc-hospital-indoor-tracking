@@ -82,7 +82,7 @@ class _AdminScreenState extends State<AdminScreen> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        _users[index].name.toString(),
+                        _users[index].name.toString().toUpperCase(),
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

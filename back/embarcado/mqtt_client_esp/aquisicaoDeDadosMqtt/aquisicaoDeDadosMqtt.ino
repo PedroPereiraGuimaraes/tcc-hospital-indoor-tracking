@@ -9,7 +9,7 @@ const char* ssid = "EspTest";
 const char* password = "32323232";
 
 // Substitua pelo endereço IP do seu broker MQTT
-const char* mqtt_server = "192.168.179.86";
+const char* mqtt_server = "10.0.8.23";
 
 WiFiClient espClient;
 PubSubClient client(espClient);

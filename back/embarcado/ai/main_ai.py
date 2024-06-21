@@ -35,6 +35,7 @@ def verify_equipment_room_on_database(new_current_room, esp_id):
     try:
         # Get current room saved in the database
         equipmentDAO = EquipmentDAO()
+        # equipment['current_room'] = ""
         equipment = equipmentDAO.get_current_room_and_date(esp_id)
 
         roomDAO = RoomDAO()
@@ -45,6 +46,7 @@ def verify_equipment_room_on_database(new_current_room, esp_id):
             print(f"current room: {new_current_room}")
             equipmentDAO.update_historic(esp_id, equipment['current_room'], equipment['current_date'])
             equipmentDAO.update_current_room(esp_id, str(new_current_room))
+            roomDAO.delete_equipment_in_room(equipment['patrimonio'])
             roomDAO.update_equipment_in_room(str(new_current_room), equipment['name'], equipment['patrimonio'])
         else:
             print("It didn't move")
@@ -81,7 +83,14 @@ def create_all_rooms():
     for room in rooms:
         roomDAO.create(str(room))
 
+# create_all_rooms()
+
 # Test
+# sala 13
 # keys = ['90:3A:72:25:03:C8','30:87:D9:02:FA:C8','B4:79:C8:05:B9:A8','B4:79:C8:45:BA:58']
 # values = [-61,-62,-83,-87]
-# check_room(keys, values, 'ESP2')
+
+# sala 10
+# keys = ["30:87:D9:02:FA:C8","90:3A:72:25:03:C8","B4:79:C8:05:B9:A8","90:3A:72:24:EF:E8","90:3A:72:24:E9:68","B4:79:C8:05:C2:38"]
+# values = [-57,-73,-74,-87,-82.0,-87.0]
+# check_room(keys, values, 'ESP1')

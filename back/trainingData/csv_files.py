@@ -12,11 +12,15 @@ def joinTables(directory):
         caminho_arquivo = os.path.join(directory, arquivo)
         df = pd.read_csv(caminho_arquivo, delimiter=',')
         # Adiciona uma coluna 'Arquivo' com o nome do arquivo de onde os dados vieram
-        df['Arquivo'] = arquivo
+        df['Sala'] = arquivo
+        
         dfs.append(df)
 
     # Concatena todos os DataFrames em um único DataFrame
     df_final = pd.concat(dfs, ignore_index=True)
+    df_final.fillna(0, inplace=True)       # Substitui NaN por 0
+
+    df_final['Sala'] = df_final['Sala'].str.replace('.csv', '', regex=False)
 
     # Salvando novo dataFrame 
     df_final.to_csv(r'back\trainingData\joinData\joinTables.csv', index=False, sep=',')
@@ -25,7 +29,7 @@ def joinTables(directory):
 # Divides data into training and testing data and save it in .csv files
 def split_data():
     # Load full dataset
-    df = pd.read_csv(r'back\trainingData\joinData\TabelaTratadaV2.csv')
+    df = pd.read_csv(r'back\trainingData\joinData\joinTables.csv')
 
     #  Divides data into training and testing dat
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)

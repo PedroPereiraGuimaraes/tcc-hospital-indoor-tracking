@@ -69,3 +69,12 @@ class RoomDAO: # DAO - Data Access Object
             return res
         except Exception as e:
             raise e
+        
+    def delete_equipment_in_room(self, patrimonio):
+        try:
+            res = self.db.collection.update_many({}, {"$pull": {"equipments": {"patrimonio": patrimonio}}})
+            # print("one equipment: ", res)
+
+            return res
+        except Exception as e:
+            raise e

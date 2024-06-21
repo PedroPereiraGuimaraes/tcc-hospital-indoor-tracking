@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Hospital Indoor Tracking System",
+      title: "Hospital Indoor Tracking System",     
       initialRoute: '/login',
       routes: {
         '/splash': (context) => SplashScreen(),

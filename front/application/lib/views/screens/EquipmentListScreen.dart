@@ -73,7 +73,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
                 itemBuilder: (context, index) {
                   return CardRoom(
                     equipamentsList[index].name.toUpperCase(),
-                    equipamentsList[index].currentRoom.toUpperCase(),
+                     equipamentsList[index].currentRoom ?? "N/A",
                     equipamentsList[index].patrimonio,
                   );
                 },
@@ -118,7 +118,7 @@ class _EquipmentListScreenState extends State<EquipmentListScreen> {
   }
 
 
-  Widget CardRoom(String name, String room, String patrimonio) {
+  Widget CardRoom(String name, String room , String patrimonio) {
     TextEditingController _editController = TextEditingController(text: name);
     
     return Card(

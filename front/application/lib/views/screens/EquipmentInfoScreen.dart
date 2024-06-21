@@ -24,6 +24,17 @@ class EquipamentScreen extends StatefulWidget {
 }
 
 class _EquipamentScreenState extends State<EquipamentScreen> {
+
+  //  Future<List<dynamic>> updateEquipament() async {
+  //   List<dynamic> equipaments = await getReadOne(int.parse(widget.patrimonio));
+  //   // List<dynamic> equipaments = await updateEquipament();
+  //   // return equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
+  // }
+  @override
+  void initState() {
+    super.initState();
+    ();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

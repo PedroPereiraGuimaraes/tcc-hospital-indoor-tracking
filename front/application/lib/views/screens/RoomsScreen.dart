@@ -25,7 +25,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
   Future<void> getRooms() async {
     List<dynamic> rooms = await getReadAll();
     roomsList = rooms.map((e) => Room.fromJson(e)).toList();
-   
+    
     setState(() {
       roomsList = roomsList;
     });
@@ -84,10 +84,11 @@ class _RoomsScreenState extends State<RoomsScreen> {
               child: ListView.builder(
                 itemCount: roomsList.length,
                 itemBuilder: (context, index) {
+                  final test = roomsList[index];
                   final roomName = roomsList[index].name!.toLowerCase();
                   final qEquipments = roomsList[index].equipments?.length ?? 0; 
                   final searchQuery = _searchController.text.toLowerCase();
-                  
+                  print('roomsList: $qEquipments');
                   return roomName.contains(searchQuery)
                       ? CardRoom(roomName.toUpperCase(), qEquipments)
                       : SizedBox.shrink();

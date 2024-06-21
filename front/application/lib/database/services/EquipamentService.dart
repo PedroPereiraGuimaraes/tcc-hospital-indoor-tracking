@@ -20,6 +20,34 @@ Future<List<dynamic>> getReadAll() async {
   }
 }
 
+Future<dynamic> updateEquipament( String patrimonio,
+     String name,
+     DateTime lastMaintenance,
+     DateTime nextMaintenance) async {
+  var url = Uri.parse('$URL/equipment/update');
+  var response = await http.put(url, body: {
+    'patrimonio': patrimonio,
+    'name': name,
+    'last_maintenance': lastMaintenance.toIso8601String(),
+    'next_maintenance': nextMaintenance.toIso8601String(),
+  });
+  try {
+    if (response.statusCode == 200) {
+      return "Success";
+    } else {
+      throw Exception('Failed to create Room');
+    }
+  } catch (e) {
+    throw Exception('Failed to $e');
+  }
+    }
+
+
+
+  
+
+
+
 Future<dynamic> getReadOne(int patrimonio) async {
   var url = Uri.parse('$URL/equipment/read-one?patrimonio=$patrimonio');
   var response = await http.get(url);

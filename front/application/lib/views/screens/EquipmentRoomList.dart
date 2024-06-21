@@ -169,13 +169,17 @@ class _EquipmentRoomListState extends State<EquipmentRoomList> {
           ),
         ),
         subtitle: Text(
-          "Última vez visto: ${time.day}/${time.month}/${time.year}",
+          "$patrimonio \n ${time.day}/${time.month}/${time.year}",
+          
           style: TextStyle(
-            color: Colors.black,
+            color: Color.fromARGB(255, 116, 122, 126),
             fontFamily: GoogleFonts.josefinSans().fontFamily,
-            fontSize: 15,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
           ),
         ),
+
+        
         trailing: Icon(
           Icons.arrow_forward_ios,
           color: Color.fromARGB(255, 0, 129, 223),

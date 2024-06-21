@@ -126,7 +126,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
         ),
       ),
       subtitle: Text(
-        "Patrimônio: ${Random().nextInt(1000)}",
+        "Patrimônio: trocar",
         style: TextStyle(
           color: Colors.grey,
           fontFamily: GoogleFonts.josefinSans().fontFamily,

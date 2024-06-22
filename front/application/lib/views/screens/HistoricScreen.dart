@@ -3,11 +3,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:front_end/database/models/Equipament.dart';
-import 'package:front_end/database/models/Historyc.dart';
+import 'package:front_end/database/models/Historic.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:front_end/database/services/HistorycService.dart';
+import 'package:front_end/database/services/HistoricService.dart';
 import 'package:intl/intl.dart';
 
 class HistoricScreen extends StatefulWidget {
@@ -19,15 +19,24 @@ class HistoricScreen extends StatefulWidget {
 
 class _HistoricScreenState extends State<HistoricScreen> {
   final TextEditingController _searchController = TextEditingController();
-  Map<dynamic, List<dynamic>> equipamentWithHistoricMap = {};
   List<EquipmentWithHistory> historicList = [];
-  
+
   Future<void> getHistoric() async {
-     List<dynamic> historicData = await getEquipamentWithHistoric();
-      historicList = historicData.map((e) => EquipmentWithHistory.fromJson(e)).toList();
-      setState(() {
-        historicList = historicList;
-      });
+    List<dynamic> historicData = await getEquipamentWithHistoric();
+    historicList =  historicData.map((e) {
+  if (e.containsKey('historic')) {
+    return EquipmentWithHistory.fromJson(e);
+  } else {
+    return EquipmentWithHistory(
+      name: e['name'],
+      patrimonio: e['patrimonio'],
+      historic: [], // ou null, dependendo do que faz sentido para sua aplicação
+    );
+  }
+}).toList();
+    setState(() {
+      historicList = historicList;
+    });
   }
 
   @override
@@ -70,8 +79,7 @@ class _HistoricScreenState extends State<HistoricScreen> {
               child: ListView.builder(
                 itemCount: historicList.length,
                 itemBuilder: (context, index) {
-                  List<dynamic> historyList_to = historicList[index].historic;
-                  return CardRoom(historicList[index].name, historicList[index].historic);
+                  return CardRoom(historicList[index]);
                 },
               ),
             ),
@@ -112,60 +120,60 @@ class _HistoricScreenState extends State<HistoricScreen> {
     );
   }
 
-  Widget CardRoom(String equipamentName, List<HistoricEntry> historyList) {
-  print("historyList: $historyList");
-  return Card(
-    child: ExpansionTile(
-      title: Text(
-        equipamentName.toUpperCase(),
-        style: TextStyle(
-          color: Color.fromARGB(255, 0, 129, 223),
-          fontFamily: GoogleFonts.josefinSans().fontFamily,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
+  Widget CardRoom(EquipmentWithHistory equipment) {
+    List<HistoricEntry> historyList = equipment.historic;
+    return Card(
+      child: ExpansionTile(
+        title: Text(
+          equipment.name.toUpperCase(),
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 129, 223),
+            fontFamily: GoogleFonts.josefinSans().fontFamily,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
-      subtitle: Text(
-        "Patrimônio: trocar",
-        style: TextStyle(
-          color: Colors.grey,
-          fontFamily: GoogleFonts.josefinSans().fontFamily,
-          fontSize: 15,
+        subtitle: Text(
+          "Patrimônio: ${equipment.patrimonio}",
+          style: TextStyle(
+            color: Colors.grey,
+            fontFamily: GoogleFonts.josefinSans().fontFamily,
+            fontSize: 15,
+          ),
         ),
-      ),
-      children: historyList.asMap().entries.map((entry) {
-        int index = entry.key;
-        HistoricEntry history = entry.value;
+        children: historyList.asMap().entries.map((entry) {
+          int index = entry.key;
+          HistoricEntry history = entry.value;
 
-        return Column(
-          children: [
-            ListTile(
-              title: Text(
-                "Sala ${history.room}",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: GoogleFonts.josefinSans().fontFamily,
-                  fontSize: 15,
+          return Column(
+            children: [
+              ListTile(
+                title: Text(
+                  "Sala ${history.room}",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    fontSize: 15,
+                  ),
+                ),
+                subtitle: Text(
+                  "${DateFormat('dd/MM/yyyy (HH:mm)').format(history.inicialDate)}",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    fontSize: 15,
+                  ),
                 ),
               ),
-              subtitle: Text(
-                "${DateFormat('dd/MM/yyyy (HH:mm)').format(DateTime.parse(history.inicialDate.toString()))}",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: GoogleFonts.josefinSans().fontFamily,
-                  fontSize: 15,
+              if (index < historyList.length - 1)
+                Divider(
+                  color: Colors.grey,
+                  thickness: 1.0,
                 ),
-              ),
-            ),
-            if (index < historyList.length - 1)
-              Divider(
-                color: Colors.grey,
-                thickness: 1.0,
-              ),
-          ],
-        );
-      }).toList(),
-    ),
-  );
-}
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
 }

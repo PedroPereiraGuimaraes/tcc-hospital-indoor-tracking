@@ -1,3 +1,4 @@
+
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
@@ -24,17 +25,12 @@ class EquipamentScreen extends StatefulWidget {
 }
 
 class _EquipamentScreenState extends State<EquipamentScreen> {
-
-  //  Future<List<dynamic>> updateEquipament() async {
-  //   List<dynamic> equipaments = await getReadOne(int.parse(widget.patrimonio));
-  //   // List<dynamic> equipaments = await updateEquipament();
-  //   // return equipaments.map((e) => EquipamentRoom.fromJson(e)).toList();
-  // }
   @override
   void initState() {
     super.initState();
     ();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +46,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
         child: Expanded(
           child: ListView(
             children: [
-              CardEquipament(widget.equipamentName, DateTime.now()),
+              CardEquipament(widget.equipamentName, DateTime.now(), widget.roomName, widget.patrimonio),
             ],
           ),
         ),
@@ -59,9 +55,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
     );
   }
 
-  
-
-  Widget CardEquipament(String equipamentName, DateTime lastMaintenance) {
+  Widget CardEquipament(String equipamentName, DateTime lastMaintenance, String roomName, String patrimonio) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.all(10),
@@ -82,7 +76,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              equipamentName,
+              equipamentName.toUpperCase(),
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 129, 223),
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -156,7 +150,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               borderRadius: BorderRadius.zero,
             ),
             child: Text(
-              widget.roomName,
+              "Sala $roomName",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -187,7 +181,7 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
               borderRadius: BorderRadius.zero,
             ),
             child: Text(
-              widget.patrimonio,
+              patrimonio,
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: GoogleFonts.josefinSans().fontFamily,
@@ -310,39 +304,18 @@ class _EquipamentScreenState extends State<EquipamentScreen> {
             ),
             TextButton(
               child: Text(
-                'Confirmar',
+                'Excluir',
                 style: TextStyle(
-                  color: Color.fromARGB(255, 0, 129, 223),
+                  color: Color.fromARGB(255, 124, 16, 16),
                   fontFamily: GoogleFonts.josefinSans().fontFamily,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               onPressed: () {
-                String enteredName = textController.text.trim();
-                if (enteredName.toLowerCase() == nome.toLowerCase()) {
-                  deleteEquipament(patrimonio).then((result) {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EquipmentListScreen(),
-                      ),
-                    );
-                  }).catchError((error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Erro ao excluir equipamento!'),
-                      ),
-                    );
-                  });
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Nome do equipamento incorreto!'),
-                    ),
-                  );
+                if (textController.text == nome) {
+                  deleteEquipament(patrimonio);
+                  Navigator.of(context).pop();
                 }
               },
             ),

@@ -78,13 +78,14 @@ Future<List<dynamic>> getEquipmentsByCurrentRoom(String current_room) async {
     return Future.error('Failed to $e');
   }
 }
-Future<dynamic> createEquipment(String name) async {
+Future<dynamic> createEquipment(String name, String patrimonio) async {
   var url = Uri.parse('$URL/equipment/create');
   final headers = {
     'Content-Type': 'application/json',
   };
   final body = jsonEncode({
     "name": name,
+    "patrimonio": patrimonio
   });
   var response = await http.post(url, headers: headers, body: body);
   try {

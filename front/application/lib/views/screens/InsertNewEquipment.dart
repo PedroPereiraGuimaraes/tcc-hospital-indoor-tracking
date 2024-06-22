@@ -8,6 +8,7 @@ import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:front_end/views/widgets/Navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:front_end/database/services/RoomService.dart';
+import 'package:front_end/database/services/EquipamentService.dart' as EquipamentService; // Certifique-se de importar o serviço de equipamento
 import 'package:intl/intl.dart';
 
 class AddEquipamentList extends StatefulWidget {
@@ -56,7 +57,7 @@ class _AddEquipamentListState extends State<AddEquipamentList> {
       lastDate: DateTime(2101),
     );
 
-     if (pickedDate != null && pickedDate != initialDate) {
+    if (pickedDate != null && pickedDate != initialDate) {
       setState(() {
         if (isLastCalibration) {
           _selectedLastCalibrationDate = pickedDate;
@@ -72,6 +73,28 @@ class _AddEquipamentListState extends State<AddEquipamentList> {
       return 'Selecione uma data';
     }
     return DateFormat('dd/MM/yyyy').format(date);
+  }
+
+  Future<void> _saveEquipment() async {
+    String name = _nameController.text;
+    String patrimonio = _tomboController.text;
+
+    if (name.isNotEmpty && patrimonio.isNotEmpty) {
+      try {
+        await EquipamentService.createEquipment(name, patrimonio);
+        // Navegar para a tela de lista de equipamentos após salvar
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EquipmentListScreen(),
+          ),
+        );
+      } catch (e) {
+        print('Erro ao adicionar equipamento: $e');
+      }
+    } else {
+      print('Por favor, preencha todos os campos.');
+    }
   }
 
   @override
@@ -144,7 +167,8 @@ class _AddEquipamentListState extends State<AddEquipamentList> {
       ),
     );
   }
-Widget CardEquipament(String equipamentName, DateTime lastMaintenance) {
+
+  Widget CardEquipament(String equipamentName, DateTime lastMaintenance) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.all(10),
@@ -168,37 +192,6 @@ Widget CardEquipament(String equipamentName, DateTime lastMaintenance) {
             _nameController,
             false,
           ),
-          //SizedBox(height: 20),
-          // DropdownButtonFormField<String>(
-          //   decoration: InputDecoration(
-          //     labelText: 'Última vez visto',
-          //     labelStyle: TextStyle(
-          //       color: Color.fromARGB(255, 0, 129, 223),
-          //       fontFamily: GoogleFonts.josefinSans().fontFamily,
-          //       fontSize: 14,
-          //     ),
-          //     filled: true,
-          //     fillColor: Colors.white,
-          //     focusedBorder: UnderlineInputBorder(
-          //       borderSide: BorderSide(
-          //         color: Color.fromARGB(255, 0, 129, 223),
-          //         width: 3.0,
-          //       ),
-          //     ),
-          //   ),
-          //   value: _selectedRoom,
-          //   items: _rooms.map((String room) {
-          //     return DropdownMenuItem<String>(
-          //       value: room,
-          //       child: Text(room),
-          //     );
-          //   }).toList(),
-          //   onChanged: (String? newValue) {
-          //     setState(() {
-          //       _selectedRoom = newValue!;
-          //     });
-          //   },
-          // ),
           SizedBox(height: 20),
           ListTile(
             title: Text(
@@ -240,14 +233,7 @@ Widget CardEquipament(String equipamentName, DateTime lastMaintenance) {
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const EquipmentListScreen(),
-                ),
-              );
-            },
+            onPressed: _saveEquipment,
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 0, 129, 223),
               minimumSize: const Size(double.infinity, 50),

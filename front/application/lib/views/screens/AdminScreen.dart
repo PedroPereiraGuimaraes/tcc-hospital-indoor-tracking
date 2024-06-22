@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:front_end/database/models/User.dart';
 import 'package:front_end/views/widgets/Appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:front_end/database/services//UserService.dart';
+import 'package:front_end/database/services/UserService.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({Key? key}) : super(key: key);
@@ -14,7 +14,6 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
-
   List<String> _cargos = [
     'Administrador',
     'Colaborador',
@@ -23,7 +22,6 @@ class _AdminScreenState extends State<AdminScreen> {
   List<User> _users = [];
 
   void _fetchUsers() {
-
     getAllUsers().then((users) {
       setState(() {
         _users = users.map<User>((user) => User.fromJson(user)).toList();
@@ -44,14 +42,13 @@ class _AdminScreenState extends State<AdminScreen> {
       print('Failed to change user admin: $error');
     });
   }
+
   @override
   void initState() {
     super.initState();
     _fetchUsers();
     _cargos = ['Administrador', 'Colaborador'];
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,32 +59,51 @@ class _AdminScreenState extends State<AdminScreen> {
         hasBackButton: true,
       ),
       body: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'USUÁRIOS',
-                style: TextStyle(
-                  fontSize: 20,
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'USUÁRIOS',
+              style: GoogleFonts.josefinSans(
+                textStyle: TextStyle(
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  fontFamily: GoogleFonts.josefinSans().fontFamily,
                   color: Color.fromARGB(255, 0, 129, 223),
                 ),
               ),
-              SizedBox(height: 20),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _users.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _users.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 5,
+                    margin: EdgeInsets.symmetric(vertical: 8),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 5,
+                      ),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.blueAccent,
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
+                      ),
                       title: Text(
-                        _users[index].name.toString().toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: GoogleFonts.josefinSans().fontFamily,
-                          color: Colors.black,
+                        _users[index].name.toString(),
+                        style: GoogleFonts.josefinSans(
+                          textStyle: TextStyle(
+                            fontSize: 18,
+                            //fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       subtitle: Text(
@@ -96,36 +112,48 @@ class _AdminScreenState extends State<AdminScreen> {
                             : _users[index].isAdmin == false
                                 ? 'Colaborador'
                                 : 'Cargo não definido',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: GoogleFonts.josefinSans().fontFamily,
-                          color: Colors.grey[500],
+                        style: GoogleFonts.josefinSans(
+                          textStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[500],
+                          ),
                         ),
                       ),
-                      onTap: () => _showcargoSelectionDialog(context, index),
-                    );
-                  },
-                ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.grey,
+                        size: 16,
+                      ),
+                      onTap: () => _showCargoSelectionDialog(context, index),
+                    ),
+                  );
+                },
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Future<void> _showcargoSelectionDialog(
+  Future<void> _showCargoSelectionDialog(
       BuildContext context, int index) async {
     await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
           title: Text(
-            'Cargo',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              fontFamily: GoogleFonts.josefinSans().fontFamily,
-              color: Colors.black,
+            'Selecione o Cargo',
+            style: GoogleFonts.josefinSans(
+              textStyle: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
           ),
           content: Column(
@@ -135,16 +163,18 @@ class _AdminScreenState extends State<AdminScreen> {
               return ListTile(
                 title: Text(
                   cargo,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: GoogleFonts.josefinSans().fontFamily,
-                    color: Colors.grey[900],
+                  style: GoogleFonts.josefinSans(
+                    textStyle: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[900],
+                    ),
                   ),
                 ),
                 onTap: () {
                   setState(() {
-                      _changeUserAdmin(_users[index].registration.toString(), true);
+                    _changeUserAdmin(
+                        _users[index].registration.toString(), true);
                     _users[index].isAdmin = cargo == 'Administrador';
                   });
                   Navigator.pop(context);
